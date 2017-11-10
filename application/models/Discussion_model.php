@@ -19,6 +19,36 @@ class Discussion_model extends CI_Model
       } else {
         return 0;
         }
-  }
+			}
+
+			public function discussion_list() {
+				// List of discussions from the database
+				// to add sort method in the improvement
+				$query = "SELECT * FROM 'discussion' ORDER BY 'discussion'.'age' DESC";
+				/*if ($sort != null) {
+					if ($filter == `age`) {
+						$filter = `ds_created_at`;
+						switch ($direction) {
+							case `ASC`:
+							$dir = `ASC`;
+							break;
+							case `DESC`:
+							$dir = `DESC`;
+							break;
+							default:
+							$dir = `ASC`;
+						}
+					}
+				} else {
+					$dir = `ASC`;
+				}
+				$query .= "ORDER BY `ds_created_at` " . $dir;*/
+				$result = $this->db->query($query);
+				if ($result) {
+					return $result;
+				} else {
+					return false;
+				}
+		}
 }
 ?>

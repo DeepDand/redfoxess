@@ -44,6 +44,20 @@ class Discussion extends CI_Controller
 	public function failView(){
 		$this->load->view('fail_view');
 	}
+
+	public function discussionList(){
+		$page_data['query'] = $this->Discussion_model->discussion_list();
+		$this->load->view('discussionList_view',$page_data);
+	}
+
+	public function discussionDetails(){
+		//details include the discussion body, posts on the discussion and the comments on these posts
+		//first step - load discussion body, then load related posts and then comments on the posts.
+		//$page_data['query'] = $this->Discussion_model->discussion_list();
+		$this->load->view('discussionDetails_view');
+	}
+
+
 	public function create() {
     $this->form_validation->set_rules('cwid', $this->lang->line('cwid'), 'required|min_length[8]|max_length[8]');
     $this->form_validation->set_rules('ds_title', $this->lang->line('discussion_ds_title'), 'required|min_length[1]|max_length[50]');
@@ -57,7 +71,7 @@ class Discussion extends CI_Controller
 				            'ds_body' =>  $this->input->post('ds_body')
 				           );
 			if ($this->Discussion_model->create($data)) {
-				redirect('Discussion/successView'); //need to redirected to the list of discussions __******
+				redirect('Discussion/discussionList'); //need to redirected to the list of discussions __******
 			} else {
 				// error
 				// load view and flash sess error
