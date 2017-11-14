@@ -54,7 +54,23 @@ class Discussion extends CI_Controller
 		//details include the discussion body, posts on the discussion and the comments on these posts
 		//first step - load discussion body, then load related posts and then comments on the posts.
 		//$page_data['query'] = $this->Discussion_model->discussion_list();
-		$this->load->view('discussionDetails_view');
+		//$data = array('d_id' => $this->input->post('d_id'));
+
+		$did = $this->uri->segment(3);
+		//fetch discussions from Discussion IDs
+		if($did != '') {
+			$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
+			$this->load->view('discussionDetails_view',$discussion_data);
+		/*	if($page_data != ''){
+				$this->load->view('discussionDetails_view',$page_data);
+				}
+			else {
+				$this->load->view('success_view');
+			}*/
+		}
+		else {
+			$this->load->view('fail_view');
+		}
 	}
 
 
