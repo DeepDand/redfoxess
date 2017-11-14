@@ -12,22 +12,25 @@
 <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
 <div class="container fluid">
   <h2>On-going Discussions</h2>
-  <table class="table table-hover">
-    <thead>
-      <td>Discussion Title</td>
-      <td>Created By</td>
-      <td>View the discussion</td>
-    </thead>
-  <?php
-    foreach ($query->result() as $result) :
-      //$this->input->post($result->d_id, $result->d_title, $result->cwid);?>
-    <tr>
-      <td><a href="<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"><?php echo $result->d_title; ?></a></td>
-      <td><?php echo $result->cwid; ?></td>
-      <td><button type="submit">View discussion</button></td>
-    </tr>
-  </div><br />
+    <div class="col-md-3">
+      <table class="table table-responsive">
+        <thead>
+          <td>Discussion Title</td>
+          <td>Created By</td>
+        </thead>
+      </div>
+      <?php
+        foreach ($query->result() as $result) :
+          //$this->input->post($result->d_id, $result->d_title, $result->cwid);?>
+        <div class="col-md-3">
+          <tr>
+            <td><a href="<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"><?php echo $result->d_title; ?></a></td>
+            <td><?php echo $result->cwid; ?></td>
+          </tr>
+        </div>
+      <br />
 <?php endforeach; ?>
+</table>
 </div>
 <?php //echo form_close(); ?>
 </body>
