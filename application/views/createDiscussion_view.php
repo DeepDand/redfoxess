@@ -13,6 +13,8 @@
     <div class="container fluid" id="cview">
       <?php echo "<h3>".$title."</h3>" ?><br />
       <a href="<?php echo base_url().'Discussion/newDiscussion'; ?>"><button type="button" class="btn btn-default btn-lg" id="btn-next">Create Discussion</button></a>
+			<br /><br /><br />
+			<a href="<?php echo base_url().'Discussion/discussionList'; ?>"><button type="button" class="btn btn-default btn-lg" id="btn-next">View on going Discussions</button></a>
     </div>
   </body>
 </html>

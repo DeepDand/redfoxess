@@ -34,13 +34,10 @@ class Discussion extends CI_Controller
 		$this->load->view('createDiscussion_view', $data);
 	}
 
-	public function newDiscussion(){
-		$data['title'] = "Marist Disussion Forums";
-    $this->load->view('newDiscussion_view.php',$data);
-	}
 	public function successView(){
 		$this->load->view('success_view');
 	}
+
 	public function failView(){
 		$this->load->view('fail_view');
 	}
@@ -49,6 +46,36 @@ class Discussion extends CI_Controller
 		$page_data['query'] = $this->Discussion_model->discussion_list();
 		$this->load->view('discussionList_view',$page_data);
 	}
+
+	public function newDiscussion(){
+		$data['title'] = "Marist Disussion Forums";
+    $this->load->view('newDiscussion_view.php',$data);
+	}
+
+	public function addNewPost(){
+		$data['title'] = "Marist Disussion Forums";
+
+    // Submitted form data
+    $data['cwid']   = $_POST['cwid'];
+    $data['p_title']   = $_POST['postTitle'];
+    $data['p_body']   = $_POST['postBody'];
+		$data['d_id']   = $_POST['d_id'];
+		$did = $_POST['d_id'];
+/*    $data['cwid']   = $this->uri->segment(3);
+    $data['postTitle']   = $this->uri->segment(4);
+    $data['postBody']   = $this->uri->segment(5);
+		$data['d_id']   = $this->uri->segment(6);*/
+
+
+		if($this->Discussion_model->createPost($data)){
+			$post_data['postquery'] = $this->Discussion_model->fetch_post($did);
+			$post_data['query'] = $this->Discussion_model->fetch_discussion($did);
+			$this->load->view('discussionDetails_view',$post_data);
+			} else {
+				$this->load->view('fail_view');
+			}
+		}
+
 
 	public function discussionDetails(){
 		//details include the discussion body, posts on the discussion and the comments on these posts
@@ -60,6 +87,7 @@ class Discussion extends CI_Controller
 		//fetch discussions from Discussion IDs
 		if($did != '') {
 			$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
+			$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);
 			$this->load->view('discussionDetails_view',$discussion_data);
 		/*	if($page_data != ''){
 				$this->load->view('discussionDetails_view',$page_data);

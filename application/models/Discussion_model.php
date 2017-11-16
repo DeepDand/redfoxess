@@ -20,6 +20,18 @@ class Discussion_model extends CI_Model
 			return 0;
 		}
 	}
+	public function createPost($data) {
+    // Look and see if the email address already exists in the users
+    // table, if it does return the primary key, if not create them
+    // a user account and return the primary key.
+    $post_data = array('d_id' => $data['d_id'],'p_title' => $data['p_title'],'p_body' =>$data['p_body'],'cwid' =>$data['cwid']); //can be added a field for active discussions 'ds_is_active' => '1'
+		$inserting =  $this->db->insert("post",$post_data);
+    if ($inserting) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 
 	public function fetch_discussion($did){
 		//function to fetch discussions details from the database
@@ -32,6 +44,21 @@ class Discussion_model extends CI_Model
 
 		if($query->num_rows() == 1) {
 			return $query;
+		} else {
+			return false;
+		}
+	}
+	public function fetch_post($did){
+		//function to fetch discussions details from the database
+		$condition = 'd_id='."'".$did."'";
+		$this->db->select('*');
+		$this->db->from('post');
+		$this->db->where($condition);
+		//$this->db->limit(1);
+		$postquery = $this->db->get();
+
+		if($postquery->num_rows() > 0) {
+			return $postquery;
 		} else {
 			return false;
 		}
