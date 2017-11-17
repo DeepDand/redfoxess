@@ -85,7 +85,7 @@
     <br /><br />
     <?php
 
-    if($postquery->num_rows() > 0) {
+    if($postquery) {
     foreach ($postquery->result() as $postresult) : $this->input->post($postresult->p_title,$postresult->p_body);?>
     <div class="list-group list-group-item">
       <h4 class="list-group-item-heading">Post title: <?php echo $postresult->p_title; ?></h4>

@@ -60,7 +60,7 @@ class Discussion_model extends CI_Model
 		if($postquery->num_rows() > 0) {
 			return $postquery;
 		} else {
-			return false;
+				return false;
 		}
 	}
 
