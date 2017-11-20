@@ -32,6 +32,18 @@ class Discussion_model extends CI_Model
 			return 0;
 		}
 	}
+	public function createComment($data) {
+    // Look and see if the email address already exists in the users
+    // table, if it does return the primary key, if not create them
+    // a user account and return the primary key.
+    $comment_data = array('p_id' => $data['p_id'],'c_body' =>$data['c_body'],'cwid' =>$data['cwid']); //can be added a field for active discussions 'ds_is_active' => '1'
+		$inserting =  $this->db->insert("comment",$comment_data);
+    if ($inserting) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 
 	public function fetch_discussion($did){
 		//function to fetch discussions details from the database
@@ -62,6 +74,36 @@ class Discussion_model extends CI_Model
 		} else {
 				return false;
 		}
+	}
+	public function fetch_postid($pid){
+		//function to fetch discussions details from the database
+		$condition = 'p_id='."'".$pid."'";
+		$this->db->select('*');
+		$this->db->from('post');
+		$this->db->where($condition);
+		//$this->db->limit(1);
+		$postquery = $this->db->get();
+
+		if($postquery->num_rows() > 0) {
+			return $postquery;
+		} else {
+				return false;
+		}
+	}
+
+	public function fetch_comment($pid){
+		$condition = 'p_id='."'".$pid."'";
+		$this->db->select('*');
+		$this->db->from('comment');
+		$this->db->where($condition);
+		//$this->db->limit(1);
+		$pidquery = $this->db->get();
+		$pid=$pidquery->result();
+		if($pidquery->num_rows() > 0) {
+			return $pidquery;
+		} else {
+			return false;
+			}
 	}
 
 	public function discussion_list() {

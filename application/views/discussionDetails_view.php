@@ -8,8 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
-
-  function submitContactForm(){
+  function submitPostForm(){
       var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
       var cwid = $('#cwid').val();
       var title = $('#postTitle').val();
@@ -58,6 +57,51 @@
           });
       }
   }
+
+
+  function submitCommentForm(){
+      var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+      var cwid = $('#ccwid').val();
+      var body = $('#commentBody').val();
+      var p_id = $('#p_id ').val();
+
+      if(cwid.trim() == '' ){
+          alert('Please enter your CWID.');
+          $('#ccwid').focus();
+          return false;
+      }else if(body.trim() == '' ){
+          alert('Please enter your message.');
+          $('#commentBody').focus();
+          return false;
+      }else{
+          $.ajax({
+              type:'POST',
+              url:'<?php echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
+              //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
+              data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body, 'd_id':d_id},
+              beforeSend: function () {
+                  $('.submitBtn').attr("disabled","disabled");
+                  $('.modal-body').css('opacity', '.5');
+              },
+              success:function(msg){
+                  if(msg == 'ok'){
+                      $('#ccwid').val('');
+                      $('#commentBody').val('');
+                      $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
+                  }else{
+                      $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
+                  }
+                  $('.submitBtn').removeAttr("disabled");
+                  $('.modal-body').css('opacity', '');
+                  $('#myComment').modal('hide');
+                  $('#myComment').on('hidden.bs.modal', function () {
+                    location.reload();
+                  })
+
+              }
+          });
+      }
+  }
 </script>
 </head>
 <body>
@@ -84,21 +128,25 @@
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Post</button>
     <br /><br />
     <?php
-
     if($postquery) {
     foreach ($postquery->result() as $postresult) : $this->input->post($postresult->p_title,$postresult->p_body);?>
-    <div class="list-group list-group-item">
+    <div class="list-group list-group-item" style="margin-left:20px">
       <h4 class="list-group-item-heading">Post title: <?php echo $postresult->p_title; ?></h4>
+      <input type="hidden" id="p_id" value = "<?php echo (isset($postresult->p_id))?$postresult->p_id:'';?>" />
       <p class="list-group-item-text"><?php echo "Created by".$postresult->cwid; ?></p>
       <p><?php echo $postresult->p_body; ?></p>
+      <a href="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>
     </div><br />
   <?php endforeach; } else {?>
-    <div class="list-group list-group-item">
-      <p>No posts on this discussion yet.</p>
-    </div><br />
-  <?php } ?>
+      <div class="list-group list-group-item">
+        <p>No posts on this discussion yet.</p>
+      </div><br />
+    <?php } ?>
 
-    <!-- Modal -->
+
+
+
+    <!-- Modal for adding Post -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
 
@@ -121,12 +169,12 @@
                    <div class="form-group">
                        <label for="postBody">Post Body</label>
                        <textarea class="form-control" id="postBody" placeholder="Enter your message"></textarea>
-                       <input type"hidden" id="d_id" value = "<?php echo (isset($result->d_id))?$result->d_id:'';?>" />
+                       <input type="hidden" id="d_id" value = "<?php echo (isset($result->d_id))?$result->d_id:'';?>" />
                    </div>
                </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary submitBtn" onclick="submitContactForm()">SUBMIT</button>
+            <button type="button" class="btn btn-primary submitBtn" onclick="submitPostForm()">SUBMIT</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>

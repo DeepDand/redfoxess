@@ -11,7 +11,6 @@ class Discussion extends CI_Controller
 		parent::__construct();
 		$this->lang->load('en_admin_lang');
 		$this->load->model('Discussion_model');
-
 	}
 
 	/*
@@ -40,6 +39,13 @@ class Discussion extends CI_Controller
 
 	public function failView(){
 		$this->load->view('fail_view');
+	}
+
+	public function commentView(){
+		$post_id = $this->uri->segment(3);
+		$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
+		$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
+		$this->load->view('comment_view',$post_data);
 	}
 
 	public function discussionList(){
@@ -76,6 +82,21 @@ class Discussion extends CI_Controller
 			}
 		}
 
+		public function addNewComment(){
+			$data['title'] = "Marist Disussion Forums";
+	    // Submitted form data
+	    $data['cwid']   = $_POST['cwid'];
+	    $data['c_body']   = $_POST['commentBody'];
+			$data['p_id'] = $_POST['p_id'];
+			$pid = $_POST['p_id'];
+			if($this->Discussion_model->createComment($data)){
+				$comment_data['query'] = $this->Discussion_model->fetch_post($pid);
+				$comment_data['commentquery'] = $this->Discussion_model->fetch_comment($pid);
+				$this->load->view('comment_view',$comment_data);
+				} else {
+					$this->load->view('fail_view');
+			}
+		}
 
 	public function discussionDetails(){
 		//details include the discussion body, posts on the discussion and the comments on these posts
@@ -84,10 +105,14 @@ class Discussion extends CI_Controller
 		//$data = array('d_id' => $this->input->post('d_id'));
 
 		$did = $this->uri->segment(3);
+		$pid = array();
+		//$pid = $_POST['p_id'];
 		//fetch discussions from Discussion IDs
 		if($did != '') {
 			$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
 			$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);
+			//$pid['p_ids'] = $this->Discussion_model->fetch_postID($did);
+			//$discussion_data['commentquery'] = $this->Discussion_model->fetch_commentDiscussionID($did);
 			$this->load->view('discussionDetails_view',$discussion_data);
 		/*	if($page_data != ''){
 				$this->load->view('discussionDetails_view',$page_data);
@@ -124,4 +149,4 @@ class Discussion extends CI_Controller
 		}
 	}
 }
- ?>
+?>
