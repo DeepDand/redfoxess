@@ -80,7 +80,7 @@
     foreach ($commentquery->result() as $commentresult) : $this->input->post($commentresult->c_body);?>
     <div class="list-group list-group-item" style="margin-left:20px">
       <p><?php echo $commentresult->c_body; ?></p>
-      <p class="list-group-item-text"><?php echo "Created by".$commentresult->cwid; ?></p>
+      <p class="list-group-item-text" style="color:gray"><?php echo "Created by ".$commentresult->cwid; ?></p>
     </div><br />
   <?php endforeach; } else {?>
       <div class="list-group list-group-item">
@@ -107,7 +107,7 @@
                    <div class="form-group">
                        <label for="commentBody">Your Comment</label>
                        <textarea class="form-control" id="commentBody" placeholder="Enter your Comment"></textarea>
-                         <input type="" id="p_id" value = "<?php echo (isset($result->p_id))?$result->p_id:'';?>" />
+                         <input type="hidden" id="p_id" value = "<?php echo (isset($result->p_id))?$result->p_id:'';?>" />
                    </div>
                </form>
           </div>
