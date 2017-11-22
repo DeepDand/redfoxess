@@ -109,22 +109,20 @@
   <div class="container fluid">
     <h2>Discussion body</h2>
     <!--View to show the body of discussions, forums and comments on the discussions -->
-    <?php
+    <div class="list-group list-group-item">
+      <?php
     if($query->result()) {
       foreach ($query->result() as $result) : $this->input->post($result->d_title,$result->cwid,$result->d_id,$result->d_body); $d_id=$result->d_id?>
-      <div class="list-group list-group-item">
         <h4 class="list-group-item-heading">Title: <?php echo $result->d_title; ?></h4>
         <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$result->cwid; ?></p>
         <p><?php echo $result->d_body; ?></p>
-      </div><br />
+
     <?php endforeach; } else {?>
+      </div><br />
       <div class="list-group list-group-item">
         <p>No discussion found</p>
       </div><br />
-
-
     <?php } ?>
-
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Post</button>
     <br /><br />
     <?php
@@ -136,8 +134,8 @@
       <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$postresult->cwid; ?></p>
       <p><?php echo $postresult->p_body; ?></p>
       <a href="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>
-    </div><br />
-  <?php endforeach; } else {?>
+    </div><br /><?php  ?>
+  <?php endforeach; echo $links; } else {?>
       <div class="list-group list-group-item">
         <p>No posts on this discussion yet.</p>
       </div><br />

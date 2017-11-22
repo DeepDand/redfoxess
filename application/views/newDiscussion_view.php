@@ -4,18 +4,72 @@
 		<title><?php echo $title; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../assets/css/redfox.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.js" type="text/javascript"></script>
+   <script>
+      $(document).ready(function() {
+         // validate signup form on keyup and submit
+         $("#myForm").validate({
+					 errorClass: "my-error-class",
+            rules: {
+							cwid:"required",
+							ds_title:"required",
+							ds_body:"required",
+
+               cwid: {
+                  required: true,
+                  minlength: 8,
+                  maxlength: 8
+               },
+               ds_title: {
+                  required: true,
+                  minlength: 8,
+                  maxlength: 255
+               },
+							 ds_body: {
+                  required: true,
+                  minlength: 20,
+                  maxlength: 500
+               },
+            },
+            messages: {
+               cwid: {
+                  required: "CWID required",
+                  minlength: "Your CWID must be 8 characters long",
+                  maxlength: "Your CWID must be 8 characters long"
+               },
+               ds_title: {
+                  required: "Discussion title required",
+                  minlength: "Your Discussion title must be at least 8 characters long",
+                  maxlength: "Your Discussion title must be of maximum 255 characters"
+               },
+							 ds_body: {
+                  required: "Discussion body required",
+									minlength: "Your Discussion body must be at least 20 characters long",
+                  maxlength: "Your Discussion body must be of maximum 500 characters"
+               }
+            },
+						
+						onfocusout: function (element) {
+        			$(element).valid();
+    				}
+
+         });
+      });
+   </script>
   </head>
   <body>
   <?php echo validation_errors(); ?>
-  <?php echo form_open(base_url().'Discussion/create','role="form"') ; ?>
+  <?php $attributes = array('name' => 'myForm','id'=>'myForm');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
     <div class="container fluid" id="cview">
     <h4> Create a new Discussion</h4>
     <br />
     <div class="form-group col-md-5">
       <label for="cwid"><?php echo $this->lang->line('cwid');?></label>
-      <input type="text" name="cwid" class="form-control" id="cwid" value="<?php echo set_value('cwid'); ?>">
+      <input type="text" name="cwid" class="form-control" id="cwid" required="required" value="<?php echo set_value('cwid'); ?>">
     </div>
     <div class="form-group col-md-10">
       <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>

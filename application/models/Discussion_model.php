@@ -60,13 +60,25 @@ class Discussion_model extends CI_Model
 			return false;
 		}
 	}
-	public function fetch_post($did){
+	public function count_post($did){
 		//function to fetch discussions details from the database
 		$condition = 'd_id='."'".$did."'";
 		$this->db->select('*');
 		$this->db->from('post');
 		$this->db->where($condition);
 		//$this->db->limit(1);
+		$query = $this->db->get();
+		$result = $query->result();
+		$count = $query->num_rows();
+		return $count;
+	}
+	public function fetch_post($did, $limit, $start){
+		//function to fetch discussions details from the database
+		$condition = 'd_id='."'".$did."'";
+		$this->db->select('*');
+		$this->db->from('post');
+		$this->db->where($condition);
+		$this->db->limit($limit, $start);
 		$postquery = $this->db->get();
 
 		if($postquery->num_rows() > 0) {

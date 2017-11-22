@@ -103,14 +103,22 @@ class Discussion extends CI_Controller
 		//first step - load discussion body, then load related posts and then comments on the posts.
 		//$page_data['query'] = $this->Discussion_model->discussion_list();
 		//$data = array('d_id' => $this->input->post('d_id'));
-
 		$did = $this->uri->segment(3);
+		//var_dump($did);
 		$pid = array();
 		//$pid = $_POST['p_id'];
 		//fetch discussions from Discussion IDs
 		if($did != '') {
 			$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
-			$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);
+			$config = array();
+      $config["base_url"] = base_url() .'Discussion/discussionDetails/';
+      $config['total_rows'] = $this->Discussion_model->count_post($did);
+      $config['per_page'] = 2;
+      $config['uri_segment'] = 3;
+      $this->pagination->initialize($config);
+      $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+			$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did,$config['per_page'],$page);
+			$discussion_data['links'] = $this->pagination->create_links();
 			//$pid['p_ids'] = $this->Discussion_model->fetch_postID($did);
 			//$discussion_data['commentquery'] = $this->Discussion_model->fetch_commentDiscussionID($did);
 			$this->load->view('discussionDetails_view',$discussion_data);
