@@ -106,12 +106,21 @@
   }
 </script>
 <style>
+
   .easyPaginateNav a {
-    padding:5px;float: inherit
+    padding:5px;float: inherit;color: #000;
+    text-decoration: none;
   }
   .easyPaginateNav a.current {
-    font-weight:bold;text-decoration:underline;
+    font-weight:bold;background-color: #4CAF50;color: #000;border-radius: 5px;text-decoration: none;
   }
+  .easyPaginateNav a.active {
+    background-color: #4CAF50;color: #000;
+    color: white;text-decoration: none;
+}
+
+.easyPaginate a:hover:not(.active) {background-color: #ddd;}
+
 </style>
 </head>
 <body>
