@@ -72,13 +72,13 @@ class Discussion_model extends CI_Model
 		$count = $query->num_rows();
 		return $count;
 	}
-	public function fetch_post($did, $limit, $start){
+	public function fetch_post($did){//, $limit, $start)
 		//function to fetch discussions details from the database
 		$condition = 'd_id='."'".$did."'";
 		$this->db->select('*');
 		$this->db->from('post');
 		$this->db->where($condition);
-		$this->db->limit($limit, $start);
+		//$this->db->limit($limit, $start);
 		$postquery = $this->db->get();
 
 		if($postquery->num_rows() > 0) {

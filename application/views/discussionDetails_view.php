@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
+  <script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
   function submitPostForm(){
@@ -103,6 +105,14 @@
       }
   }
 </script>
+<style>
+  .easyPaginateNav a {
+    padding:5px;float: inherit
+  }
+  .easyPaginateNav a.current {
+    font-weight:bold;text-decoration:underline;
+  }
+</style>
 </head>
 <body>
   <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
@@ -115,27 +125,35 @@
       foreach ($query->result() as $result) : $this->input->post($result->d_title,$result->cwid,$result->d_id,$result->d_body); $d_id=$result->d_id?>
         <h4 class="list-group-item-heading">Title: <?php echo $result->d_title; ?></h4>
         <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$result->cwid; ?></p>
-        <p><?php echo $result->d_body; ?></p>
+        <p><?php echo $result->d_body; ?></p><br />
 
     <?php endforeach; } else {?>
-      </div><br />
+      </div>
       <div class="list-group list-group-item">
         <p>No discussion found</p>
       </div><br />
     <?php } ?>
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Post</button>
     <br /><br />
+    <div class="list-group" style="margin-left:20px" id="easyPaginate" name="easyPaginate">
     <?php
     if($postquery) {
     foreach ($postquery->result() as $postresult) : $this->input->post($postresult->p_title,$postresult->p_body);?>
-    <div class="list-group list-group-item" style="margin-left:20px">
+
+      <li class="list-group-item">
       <h4 class="list-group-item-heading">Post title: <?php echo $postresult->p_title; ?></h4>
       <input type="hidden" id="p_id" value = "<?php echo (isset($postresult->p_id))?$postresult->p_id:'';?>" />
       <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$postresult->cwid; ?></p>
       <p><?php echo $postresult->p_body; ?></p>
       <a href="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>
-    </div><br /><?php  ?>
-  <?php endforeach; echo $links; } else {?>
+    </li>
+
+
+    <br /><?php  ?>
+  <?php endforeach; //echo $links;?>
+  </div>
+  <div id="pagination"></div>
+  <?php } else {?>
       <div class="list-group list-group-item">
         <p>No posts on this discussion yet.</p>
       </div><br />
@@ -180,6 +198,12 @@
     </div>
   </div>
   <?php// echo form_close(); ?>
-
+  <script>
+  $('#easyPaginate').easyPaginate({
+    paginateElement: 'li',
+    elementsPerPage: 3,
+    effect: 'climb'
+});
+  </script>
 </body>
 </html>

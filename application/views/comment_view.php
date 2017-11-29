@@ -56,7 +56,7 @@
 <body>
   <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
   <div class="container fluid">
-    <h2>Discussion body</h2>
+    <h2>Post</h2>
     <!--View to show the body of discussions, forums and comments on the discussions -->
     <?php
     if($query) {
