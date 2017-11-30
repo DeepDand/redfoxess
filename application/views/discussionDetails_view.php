@@ -112,7 +112,7 @@
     text-decoration: none;
   }
   .easyPaginateNav a.current {
-    font-weight:bold;background-color: #4CAF50;color: #000;border-radius: 5px;text-decoration: none;
+    font-weight:bold;background-color: #4CAF50;color: #000;border-radius: 8px;text-decoration: none;
   }
   .easyPaginateNav a.active {
     background-color: #4CAF50;color: #000;

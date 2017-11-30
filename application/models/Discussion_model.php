@@ -78,6 +78,7 @@ class Discussion_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('post');
 		$this->db->where($condition);
+		$this->db->order_by("age","desc");
 		//$this->db->limit($limit, $start);
 		$postquery = $this->db->get();
 
@@ -93,6 +94,7 @@ class Discussion_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('post');
 		$this->db->where($condition);
+		$this->db->order_by("age","desc");
 		//$this->db->limit(1);
 		$postquery = $this->db->get();
 
@@ -108,6 +110,7 @@ class Discussion_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('comment');
 		$this->db->where($condition);
+		$this->db->order_by('age','desc');
 		//$this->db->limit(1);
 		$pidquery = $this->db->get();
 		$pid=$pidquery->result();
