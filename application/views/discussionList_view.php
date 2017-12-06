@@ -7,8 +7,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("#logout").click(function(){
+      window.location.href = "https://login.marist.edu/cas/logout";
+    });
+  });
+  </script>
 </head>
 <body>
+
+<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
+
 <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
 <div class="container fluid">
   <form name="myForm" id="myForm" method="post" action="<?php echo base_url().'Discussion/discussionDetails/'; ?>">
@@ -29,7 +39,6 @@
             <td><input type="hidden" id="d_id" name= "d_id" value ="<?php echo (isset($result->d_id))?$result->d_id:'';?>" required="required" /></td>
           </tr>
         </div>
-      <br />
 <?php endforeach; ?>
 </table>
 </form>

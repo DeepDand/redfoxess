@@ -52,7 +52,7 @@
                   maxlength: "Your Discussion body must be of maximum 500 characters"
                }
             },
-						
+
 						onfocusout: function (element) {
         			$(element).valid();
     				}
@@ -60,8 +60,16 @@
          });
       });
    </script>
+	 <script>
+	 $(document).ready(function(){
+		 $("#logout").click(function(){
+			 window.location.href = "https://login.marist.edu/cas/logout";
+		 });
+	 });
+	 </script>
   </head>
   <body>
+		<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
   <?php echo validation_errors(); ?>
   <?php $attributes = array('name' => 'myForm','id'=>'myForm');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
     <div class="container fluid" id="cview">

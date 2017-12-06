@@ -122,8 +122,16 @@
 .easyPaginate a:hover:not(.active) {background-color: #ddd;}
 
 </style>
+<script>
+$(document).ready(function(){
+  $("#logout").click(function(){
+    window.location.href = "https://login.marist.edu/cas/logout";
+  });
+});
+</script>
 </head>
 <body>
+  <div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
   <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
   <div class="container fluid">
     <h2>Discussion body</h2>
