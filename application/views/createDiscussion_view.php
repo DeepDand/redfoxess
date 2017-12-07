@@ -11,19 +11,14 @@
 		<script>
 		$(document).ready(function(){
 			$("#logout").click(function(){
+				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
         window.location.href = "https://login.marist.edu/cas/logout";
+				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 			});
-
-			window.onunload = function () {
-				window.location = "https://login.marist.edu/cas/logout";
-			}
+    });
 
 		</script>
-		<script type="text/javascript">
-
-
-
-    </script>
+		<script type="text/javascript" src="../js/check_browser_close.js"></script>
   </head>
   <body>
 		<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
@@ -32,6 +27,13 @@
       <a href="<?php echo base_url().'Discussion/newDiscussion'; ?>"><button type="button" class="btn btn-default btn-lg" id="btn-next">Create Discussion</button></a>
 			<br /><br /><br />
 			<a href="<?php echo base_url().'Discussion/discussionList'; ?>"><button type="button" class="btn btn-default btn-lg" id="btn-next">View on going Discussions</button></a>
+			<p>This is p tag<br /><?php echo $user; ?></p>
     </div>
   </body>
 </html>
+<?php
+print str_pad('',4096)."\n";
+ob_flush();
+flush();
+set_time_limit(45);
+?>

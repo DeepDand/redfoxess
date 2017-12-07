@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/check_browser_close.js"></script>
   <script>
   function submitCommentForm(){
       var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -60,7 +61,7 @@
 </head>
 <body>
   <div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
-  
+
   <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
   <div class="container fluid">
     <h2>Post</h2>

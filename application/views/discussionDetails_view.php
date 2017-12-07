@@ -9,6 +9,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
   <script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/check_browser_close.js"></script>
+
   <script>
   function submitPostForm(){
       var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;

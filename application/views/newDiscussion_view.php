@@ -7,9 +7,10 @@
 		<link rel="stylesheet" href="../assets/css/redfox.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
-
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.js" type="text/javascript"></script>
-   <script>
+		<script type="text/javascript" src="../js/check_browser_close.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.js" type="text/javascript"></script>
+		<script type="text/javascript" src="../js/check_browser_close.js"></script>
+   	<script>
       $(document).ready(function() {
          // validate signup form on keyup and submit
          $("#myForm").validate({

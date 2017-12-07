@@ -26,10 +26,6 @@ class Discussion extends CI_Controller
 	{
 		$data['title'] = "Marist Disussion Forums";
 		$date = date("m/d/Y");
-		$this->session->set_userdata('ad', false);
-		//$this->load->view('createDiscussion_view', $data); - actual behavior before adding LDAP
-
-		$_SESSION['CAS'] = TRUE;
 	  if (isset($_SESSION['LAST_SESSION']) && (time() - $_SESSION['LAST_SESSION'] > 900)) {
 					 if(!isset($_SESSION['CAS'])) {
 							 $_SESSION['CAS'] = false; // set the CAS session to false
@@ -38,7 +34,8 @@ class Discussion extends CI_Controller
 		$authenticated = $_SESSION['CAS'];
 			 //URL accessable when the authentication works
 	  //$casurl = "http%3A%2F%2Flocalhost%2Frepository%2F%3Fc%3Dauth%26m%3DdbAuth";
-	  $casurl = "http://localhost/redfoxes/Discussion/createDiscussion_view";
+	  //$casurl = "http://localhost/redfoxes/Discussion/createDiscussion_view";
+		$casurl = "http%3A%2F%2Flocalhost%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view";
 		if (!$authenticated) {
 					 $_SESSION['LAST_SESSION'] = time(); // update last activity time stamp
 					 $_SESSION['CAS'] = true;
@@ -54,8 +51,8 @@ class Discussion extends CI_Controller
 			 // $cassvc = 'IU'; //search kb.indiana.edu for "cas application code" to determine code to use here in place of "appCode"
 			 //$ticket = $_GET["ticket"];
 			 $params = "ticket=$_GET[ticket]&service=$casurl";
-			 //$urlNew = "$_url?$params";
-			 $urlNew = "$_url";
+			 $urlNew = "$_url?$params";
+			// $urlNew = "$_url";
 
 			 //CAS sending response on 2 lines. First line contains "yes" or "no". If "yes", second line contains username (otherwise, it is empty).
 			 $ch = curl_init();
@@ -74,10 +71,11 @@ class Discussion extends CI_Controller
 			 $user = trim($user);
 			 //set user and session variable if CAS says YES
 			 if ($access == "yes") {
+					 $user= str_replace('@marist.edu','',$user);
 					 $_SESSION['user'] = $user;
-					 $this->session->set_userdata('ad', true);
-					 $user= str_replace('@marist.edu',"",$user);
-					 $this->load->view('dbAuth');
+					 $data['user'] = $_SESSION['user'];
+					 $data['title'] = "Marist Disussion Forums";
+	 				$this->load->view('createDiscussion_view',$data);
 					 } else {
 						 echo "<h1>UnAuthorized Access</h1>";
 					 }
@@ -86,11 +84,14 @@ class Discussion extends CI_Controller
 					 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=https://login.marist.edu/cas?service='.$casurl.'">';
 				 }
 			 } else  {
-				 $this->session->set_userdata('ad', true);
 				 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=https://login.marist.edu/cas?service='.$casurl.'">';
 			 }
-			 $ticket = $_GET['ticket'];
-		 }
+			/* if($_GET['ticket']!='') {
+				 if(empty($_SESSION['login'])){
+					 $_SESSION['login'] = 'yes';
+				 }
+		 }*/
+	 }
 
 	public function successView(){
 		$this->load->view('success_view');
@@ -101,15 +102,17 @@ class Discussion extends CI_Controller
 	}
 
 	public function createDiscussion_view(){
-		$ad = $_GET['ticket'];
-		$this->session->set_userdata('ad',$ad);
-		if(($ad!='')){
-			$data['title'] = "Marist Disussion Forums";
-			$this->load->view('createDiscussion_view',$data);
-		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-		}
+			//$ad = $_GET['ticket'];
+			//$this->session->set_userdata('ad',$ad);
+			if(isset($_SESSION['user'])){
+				$data['user'] = $_SESSION['user'];
+				$data['title'] = "Marist Disussion Forums";
+				$this->load->view('createDiscussion_view',$data);
+			} else {
+				echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
+			}
 	}
+
 
 
 	public function commentView(){
@@ -126,7 +129,7 @@ class Discussion extends CI_Controller
 
 	public function discussionList(){
 		$ad = $this->session->userdata('ad');
-		if($ad!='') {
+		if(isset($_SESSION['user'])) {
 			$page_data['query'] = $this->Discussion_model->discussion_list();
 			$this->load->view('discussionList_view',$page_data);
 		} else {
@@ -137,7 +140,7 @@ class Discussion extends CI_Controller
 	public function newDiscussion(){
 		$data['title'] = "Marist Disussion Forums";
 		$ad = $this->session->userdata('ad');
-		if($ad!='') {
+		if(isset($_SESSION['user'])) {
 			$this->load->view('newDiscussion_view.php',$data);
 		} else {
 			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
@@ -258,7 +261,7 @@ class Discussion extends CI_Controller
 				}
 			}
 		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;						
+			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
 		}
 	}
 }
