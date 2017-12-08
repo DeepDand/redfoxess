@@ -12,6 +12,7 @@ class Discussion extends CI_Controller
 		if(!isset($_SESSION))
     {
         session_start();
+				//$_SESSION['id'] = session_id();
     }
 		$this->lang->load('en_admin_lang');
 		$this->load->model('Discussion_model');
@@ -32,6 +33,7 @@ class Discussion extends CI_Controller
 					 }
 			 }
 		$authenticated = $_SESSION['CAS'];
+		$_SESSION['id'] = session_id();
 			 //URL accessable when the authentication works
 	  //$casurl = "http%3A%2F%2Flocalhost%2Frepository%2F%3Fc%3Dauth%26m%3DdbAuth";
 	  //$casurl = "http://localhost/redfoxes/Discussion/createDiscussion_view";
@@ -69,12 +71,16 @@ class Discussion extends CI_Controller
 			 list($access,$user) = preg_split("/\n/",$cas_answer,2);
 			 $access = trim($access);
 			 $user = trim($user);
+			 //$this->session->set_userdata('access',$access)
 			 //set user and session variable if CAS says YES
 			 if ($access == "yes") {
 					 $user= str_replace('@marist.edu','',$user);
 					 $_SESSION['user'] = $user;
+					 $_SESSION['access'] = $access;
 					 $data['user'] = $_SESSION['user'];
-					 $data['title'] = "Marist Disussion Forums";
+					 $data['title'] = "D Disussion Forums";
+					 $ad = $_GET['ticket'];
+		 			$this->session->set_userdata('ad',$access);
 	 				$this->load->view('createDiscussion_view',$data);
 					 } else {
 						 echo "<h1>UnAuthorized Access</h1>";
@@ -93,6 +99,8 @@ class Discussion extends CI_Controller
 		 }*/
 	 }
 
+
+
 	public function successView(){
 		$this->load->view('success_view');
 	}
@@ -102,9 +110,9 @@ class Discussion extends CI_Controller
 	}
 
 	public function createDiscussion_view(){
-			//$ad = $_GET['ticket'];
-			//$this->session->set_userdata('ad',$ad);
-			if(isset($_SESSION['user'])){
+			$ad = $_GET['ticket'];
+			$this->session->set_userdata('ad',$ad);
+			if(isset($_SESSION['CAS'])){
 				$data['user'] = $_SESSION['user'];
 				$data['title'] = "Marist Disussion Forums";
 				$this->load->view('createDiscussion_view',$data);
@@ -129,6 +137,7 @@ class Discussion extends CI_Controller
 
 	public function discussionList(){
 		$ad = $this->session->userdata('ad');
+		$has_session = session_status() == PHP_SESSION_ACTIVE;
 		if(isset($_SESSION['user'])) {
 			$page_data['query'] = $this->Discussion_model->discussion_list();
 			$this->load->view('discussionList_view',$page_data);
