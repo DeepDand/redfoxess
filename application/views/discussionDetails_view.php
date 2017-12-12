@@ -9,8 +9,6 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
   <script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../js/check_browser_close.js"></script>
-
   <script>
   function submitPostForm(){
       var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -124,16 +122,9 @@
 .easyPaginate a:hover:not(.active) {background-color: #ddd;}
 
 </style>
-<script>
-$(document).ready(function(){
-  $("#logout").click(function(){
-    window.location.href = "https://login.marist.edu/cas/logout";
-  });
-});
-</script>
+
 </head>
 <body>
-  <div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
   <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
   <div class="container fluid">
     <h2>Discussion body</h2>

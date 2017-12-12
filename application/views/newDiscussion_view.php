@@ -4,12 +4,10 @@
 		<title><?php echo $title; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../assets/css/redfox.css">
+		<link rel="stylesheet" href="./css/redfox.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script type="text/javascript" src="../js/check_browser_close.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.js" type="text/javascript"></script>
-		<script type="text/javascript" src="../js/check_browser_close.js"></script>
    	<script>
       $(document).ready(function() {
          // validate signup form on keyup and submit
@@ -61,16 +59,10 @@
          });
       });
    </script>
-	 <script>
-	 $(document).ready(function(){
-		 $("#logout").click(function(){
-			 window.location.href = "https://login.marist.edu/cas/logout";
-		 });
-	 });
-	 </script>
+
   </head>
   <body>
-		<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
+
   <?php echo validation_errors(); ?>
   <?php $attributes = array('name' => 'myForm','id'=>'myForm');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
     <div class="container fluid" id="cview">

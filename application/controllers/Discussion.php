@@ -110,15 +110,10 @@ class Discussion extends CI_Controller
 	}
 
 	public function createDiscussion_view(){
-			$ad = $_GET['ticket'];
-			$this->session->set_userdata('ad',$ad);
-			if(isset($_SESSION['CAS'])){
+
 				$data['user'] = $_SESSION['user'];
 				$data['title'] = "Marist Disussion Forums";
 				$this->load->view('createDiscussion_view',$data);
-			} else {
-				echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-			}
 	}
 
 
@@ -136,24 +131,21 @@ class Discussion extends CI_Controller
 	}
 
 	public function discussionList(){
-		$ad = $this->session->userdata('ad');
+		$page_data['query'] = $this->Discussion_model->discussion_list();
+		$this->load->view('discussionList_view',$page_data);
+		/*$ad = $this->session->userdata('ad');
 		$has_session = session_status() == PHP_SESSION_ACTIVE;
 		if(isset($_SESSION['user'])) {
 			$page_data['query'] = $this->Discussion_model->discussion_list();
 			$this->load->view('discussionList_view',$page_data);
 		} else {
 			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-		}
+		}*/
 	}
 
 	public function newDiscussion(){
 		$data['title'] = "Marist Disussion Forums";
-		$ad = $this->session->userdata('ad');
-		if(isset($_SESSION['user'])) {
 			$this->load->view('newDiscussion_view.php',$data);
-		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-		}
 	}
 
 	public function addNewPost(){

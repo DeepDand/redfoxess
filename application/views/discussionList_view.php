@@ -7,21 +7,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../js/check_browser_close.js"></script>
-
-  <script>
-  $(document).ready(function(){
-    $("#logout").click(function(){
-      window.location.href = "https://login.marist.edu/cas/logout";
-    });
-  });
-  </script>
 </head>
 <body>
-
-<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
-
-<?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
+<?php @session_start();//echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
 <div class="container fluid">
   <form name="myForm" id="myForm" method="post" action="<?php echo base_url().'Discussion/discussionDetails/'; ?>">
   <h2>On-going Discussions</h2>
@@ -48,3 +36,7 @@
 <?php //echo form_close(); ?>
 </body>
 </html>
+<script type="text/javascript">
+var resultUrl = "<?php echo base_url('Discussion/discussionList')?>";
+$('#disclist').load(resultUrl);
+</script>
