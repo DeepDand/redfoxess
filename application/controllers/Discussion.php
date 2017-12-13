@@ -133,25 +133,16 @@ class Discussion extends CI_Controller
 	public function discussionList(){
 		$page_data['query'] = $this->Discussion_model->discussion_list();
 		$this->load->view('discussionList_view',$page_data);
-		/*$ad = $this->session->userdata('ad');
-		$has_session = session_status() == PHP_SESSION_ACTIVE;
-		if(isset($_SESSION['user'])) {
-			$page_data['query'] = $this->Discussion_model->discussion_list();
-			$this->load->view('discussionList_view',$page_data);
-		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-		}*/
 	}
 
 	public function newDiscussion(){
 		$data['title'] = "Marist Disussion Forums";
-			$this->load->view('newDiscussion_view.php',$data);
+		$this->load->view('newDiscussion_view.php',$data);
 	}
 
 	public function addNewPost(){
 		$data['title'] = "Marist Disussion Forums";
-		$ad = $this->session->userdata('ad');
-			if($ad!='') {
+
 		  // Submitted form data
 		  $data['cwid']   = $_POST['cwid'];
 		  $data['p_title']   = $_POST['postTitle'];
@@ -171,9 +162,6 @@ class Discussion extends CI_Controller
 				} else {
 					$this->load->view('fail_view');
 				}
-			} else {
-				echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-			}
 		}
 
 		public function addNewComment(){
@@ -181,8 +169,8 @@ class Discussion extends CI_Controller
 	    // Submitted form data
 			$ad = $this->session->userdata('ad');
 			if($ad!='') {
-		    $data['cwid']   = $_POST['cwid'];
-		    $data['c_body']   = $_POST['commentBody'];
+		    $data['cwid'] = $_POST['cwid'];
+		    $data['c_body'] = $_POST['commentBody'];
 				$data['p_id'] = $_POST['p_id'];
 				$pid = $_POST['p_id'];
 				if($this->Discussion_model->createComment($data)){
@@ -240,8 +228,7 @@ class Discussion extends CI_Controller
 
 
 	public function create() {
-		$ad = $this->session->userdata('ad');
-		if($ad!='') {
+
 	    $this->form_validation->set_rules('cwid', $this->lang->line('cwid'), 'required|min_length[8]|max_length[8]');
 	    $this->form_validation->set_rules('ds_title', $this->lang->line('discussion_ds_title'), 'required|min_length[1]|max_length[50]');
 	    $this->form_validation->set_rules('ds_body', $this->lang->line('discussion_ds_body'), 'required|min_length[1]|max_length[500]');
@@ -261,9 +248,6 @@ class Discussion extends CI_Controller
 					$this->load->view('errors/error_exception');
 				}
 			}
-		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
 		}
-	}
 }
 ?>

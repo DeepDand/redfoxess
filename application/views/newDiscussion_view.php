@@ -3,15 +3,14 @@
 	<head>
 		<title><?php echo $title; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="./css/redfox.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="http://code.jquery.com/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.js" type="text/javascript"></script>
+
    	<script>
       $(document).ready(function() {
+				//var cwid = document.getElementById("cwid").value;
+				//var ds_title = document.getElementById("ds_title").value;
+				//var ds_body = document.getElementById("ds_body").value;
          // validate signup form on keyup and submit
-         $("#myForm").validate({
+         $("#newd").validate({
 					 errorClass: "my-error-class",
             rules: {
 							cwid:"required",
@@ -64,8 +63,8 @@
   <body>
 
   <?php echo validation_errors(); ?>
-  <?php $attributes = array('name' => 'myForm','id'=>'myForm');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
-    <div class="container fluid" id="cview">
+  <?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
+    <div class="col-md-5 fluid" id="cview">
     <h4> Create a new Discussion</h4>
     <br />
     <div class="form-group col-md-5">

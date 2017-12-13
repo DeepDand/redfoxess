@@ -15,9 +15,13 @@
 			    box-sizing: border-box;
 			}
 		</style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="./css/redfox.css">
+		<script src="http://code.jquery.com/jquery-1.10.0.min.js" integrity="sha256-2+LznWeWgL7AJ1ciaIG5rFP7GKemzzl+K75tRyTByOE=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
+
 		<script type="text/javascript">
 		/*document.getElementById('ogd').onclick = function() {getList()};
 		function getList() {
@@ -34,22 +38,25 @@
 			var view = document.getElementById("discList");
 			$('#ogd').click(function(){
 				//alert('yay');
-				 view.classList.hide("mystyle");
+
 				var resultUrl = "<?php echo base_url('Discussion/discussionList')?>";
 				$('#disclist').load(resultUrl);
+				$('#disclist').css('display','block');
+				$('#newDisc').css('display','none');
 				//alert('again yay');
 			});
 			$('#newDiscussion').click(function(){
 				//alert('yay');
-				view.classList.show();//find a way to hide one when another div is visible
+
 				var resultUrl = "<?php echo base_url('Discussion/newDiscussion')?>";
 				$('#newDisc').load(resultUrl);
+				$('#newDisc').css('display','block');
+				$('#disclist').css('display','none');
 				//alert('again yay');
 			});
     });
 
 		</script>
-		<!--<script type="text/javascript" src="../js/check_browser_close.js"></script>-->
   </head>
   <body>
 		<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
@@ -67,13 +74,5 @@
 			</div>
 
     </div>
-
-
   </body>
 </html>
-<?php
-print str_pad('',4096)."\n";
-ob_flush();
-flush();
-set_time_limit(45);
-?>
