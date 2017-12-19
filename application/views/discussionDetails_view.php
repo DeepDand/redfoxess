@@ -110,6 +110,15 @@
             });
         }
     }*/
+    function fetchComments(myURL){
+      var resultUrl = myURL; //document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+      console.log(resultUrl);
+      $('#comments').load(resultUrl);
+      $('#comments').css('display','block');//showing the list of discussion
+      $('#dlist').css('display','none');//hiding the list of on going discussions
+      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+      console.log(resultUrl);
+    }
   </script>
   <style>
 
@@ -161,7 +170,9 @@
       <input type="hidden" id="p_id" value = "<?php echo (isset($postresult->p_id))?$postresult->p_id:'';?>" />
       <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$postresult->cwid; ?></p>
       <p><?php echo $postresult->p_body; ?></p>
-      <a href="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>
+      <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>
+      <input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>"></input><!--this is to pass urls to specific discussions -->
+      <!--<a href="<?php //echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>-->
     </li>
 
 

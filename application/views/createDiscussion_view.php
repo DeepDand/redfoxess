@@ -101,7 +101,7 @@
 										$('#myModal').modal('hide');
 										$(document).on('hidden.bs.modal','#myModal', function () {
 											//alert("in location reload");
-											//document.location.reload();
+											document.location.reload();
 											window.location.href='<?php echo base_url()?>'+'Discussion/discussionDetails/'+d_id;//document.getElementById('anchorid');
 											console.log();
 										})
@@ -110,12 +110,67 @@
 						});
 				}
 		}
+		function submitCommentForm(){
+	      var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+	      var cwid = $('#ccwid').val();
+	      var body = $('#commentBody').val();
+	      var p_id = $('#po_id ').val();
+
+	      if(cwid.trim() == '' ){
+	          alert('Please enter your CWID.');
+	          $('#ccwid').focus();
+	          return false;
+	      }else if(body.trim() == '' ){
+	          alert('Please enter your message.');
+	          $('#commentBody').focus();
+	          return false;
+	      }else{
+	          $.ajax({
+	              type:'POST',
+	              url:'<?php echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
+	              //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
+	              data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body},
+	              beforeSend: function () {
+	                  $('.submitBtn').attr("disabled","disabled");
+	                  $('.modal-body').css('opacity', '.5');
+	              },
+	              success:function(msg){
+	                  if(msg == 'ok'){
+	                      $('#ccwid').val('');
+	                      $('#commentBody').val('');
+	                      $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
+	                  }else{
+	                      $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
+	                  }
+	                  $('.submitBtn').removeAttr("disabled");
+	                  $('.modal-body').css('opacity', '');
+	                  $('#myComment').modal('hide');
+	                  $(document).on('hidden.bs.modal','#myComment', function () {
+											//document.location.reload();
+											window.location.href='<?php echo base_url()?>'+'Discussion/commentView/'+p_id;//document.getElementById('anchorid');
+											console.log();
+	                  })
+
+	              }
+	          });
+	      }
+	  }
 	    function fetchList(myURL){
-	      var resultUrl = myURL//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+				console.log(resultUrl);
+	      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
 	      $('#dlist').load(resultUrl);
 	      $('#dlist').css('display','block');//showing the list of discussion
 	      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
-	      console.log(resultUrl);
+	      //console.log(resultUrl);
+	    }
+			function fetchComments(myURL){
+				console.log(resultUrl);
+	      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+	      $('#comments').load(resultUrl);
+	      $('#comments').css('display','block');//showing the list of discussion
+	      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+	      $('#dlist').css('display','none');//hiding the list of on going discussions
+	      //console.log(resultUrl);
 	    }
 			/**/
 	    //$('#anchorid').click(fetchList);
@@ -145,10 +200,12 @@
 		</div>
 		<div id="dlist">
 		</div>
+		<div id="comments">
+		</div>
     </div>
 		<div id="hidemaincontainer"><button id="hidecontainer" name="hidecontainer">kill main</button></div>
 			<script>
-    
+
 	  </script>
   </body>
 </html>

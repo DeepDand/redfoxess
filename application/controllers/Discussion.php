@@ -119,15 +119,11 @@ class Discussion extends CI_Controller
 
 
 	public function commentView(){
-		$ad = $this->session->userdata('ad');
-		if($ad!='') {
 			$post_id = $this->uri->segment(3);
 			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
 			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
 			$this->load->view('comment_view',$post_data);
-		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-		}
+
 	}
 
 	public function discussionList(){
@@ -167,8 +163,6 @@ class Discussion extends CI_Controller
 		public function addNewComment(){
 			$data['title'] = "Marist Disussion Forums";
 	    // Submitted form data
-			$ad = $this->session->userdata('ad');
-			if($ad!='') {
 		    $data['cwid'] = $_POST['cwid'];
 		    $data['c_body'] = $_POST['commentBody'];
 				$data['p_id'] = $_POST['p_id'];
@@ -180,9 +174,6 @@ class Discussion extends CI_Controller
 					} else {
 						$this->load->view('fail_view');
 				}
-			} else {
-				echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-			}
 		}
 
 	public function discussionDetails(){
