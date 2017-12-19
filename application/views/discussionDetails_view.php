@@ -5,17 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
   <script src="//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
-  <script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
+  <script src="./js/jquery.easyPaginate.js"></script>
+  <!--
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script>
-  function submitPostForm(){
+-->
+<script>
+/*    function submitPostForm(){
       var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
       var cwid = $('#cwid').val();
       var title = $('#postTitle').val();
       var body = $('#postBody').val();
-      var d_id = $('#d_id ').val();
+      var d_id = $('#di_id').val();
+      console.log(d_id);
 
       if(cwid.trim() == '' ){
           alert('Please enter your CWID.');
@@ -32,7 +37,7 @@
       }else{
           $.ajax({
               type:'POST',
-              url:'<?php echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
+              url:'<?php //echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
               //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
               data:{'contactFrmSubmit':'1', 'cwid' :cwid, 'postTitle' :title, 'postBody':body, 'd_id':d_id},
               beforeSend: function () {
@@ -50,18 +55,18 @@
                   }
                   $('.submitBtn').removeAttr("disabled");
                   $('.modal-body').css('opacity', '');
-                  $('#myModal').modal('hide');
-                  $('#myModal').on('hidden.bs.modal', function () {
+                  $('.myModal').modal('hide');
+                  $('.myModal').on('hidden.bs.modal', function () {
                     location.reload();
                   })
 
               }
           });
       }
-  }
+  }*/
 
 
-  function submitCommentForm(){
+/*  function submitCommentForm(){
       var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
       var cwid = $('#ccwid').val();
       var body = $('#commentBody').val();
@@ -78,7 +83,7 @@
       }else{
           $.ajax({
               type:'POST',
-              url:'<?php echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
+              url:'<?php //echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
               //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
               data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body, 'd_id':d_id},
               beforeSend: function () {
@@ -103,7 +108,7 @@
               }
           });
       }
-  }
+  }*/
 </script>
 <style>
 
@@ -132,7 +137,7 @@
     <div class="list-group list-group-item">
       <?php
     if($query->result()) {
-      foreach ($query->result() as $result) : $this->input->post($result->d_title,$result->cwid,$result->d_id,$result->d_body); $d_id=$result->d_id?>
+      foreach ($query->result() as $result) : $this->input->post($result->d_title,$result->cwid,$result->d_id,$result->d_body); //$d_id=$result->d_id;?>
         <h4 class="list-group-item-heading">Title: <?php echo $result->d_title; ?></h4>
         <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$result->cwid; ?></p>
         <p><?php echo $result->d_body; ?></p><br />
@@ -173,7 +178,7 @@
 
 
     <!-- Modal for adding Post -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="myModal" name="myModal" role="dialog" >
       <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -195,24 +200,24 @@
                    <div class="form-group">
                        <label for="postBody">Post Body</label>
                        <textarea class="form-control" id="postBody" placeholder="Enter your message"></textarea>
-                       <input type="hidden" id="d_id" value = "<?php echo (isset($result->d_id))?$result->d_id:'';?>" />
+                       <input type="hidden" id="di_id" value = "<?php echo (isset($result->d_id))?$result->d_id:'';?>" />
                    </div>
                </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary submitBtn" onclick="submitPostForm()">SUBMIT</button>
+            <button type="button" class="btn btn-primary submitBtn" onclick="submitPostForm()" >SUBMIT</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <?php// echo form_close(); ?>
-  <script>
-  $('#easyPaginate').easyPaginate({
-    paginateElement: 'li',
-    elementsPerPage: 3,
-    effect: 'climb'
+    </div>
+    <?php// echo form_close(); ?>
+    <script>
+    $('#easyPaginate').easyPaginate({
+      paginateElement: 'li',
+      elementsPerPage: 3,
+      effect: 'climb'
 });
   </script>
 </body>

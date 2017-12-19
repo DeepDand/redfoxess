@@ -6,10 +6,6 @@
 
    	<script>
       $(document).ready(function() {
-				//var cwid = document.getElementById("cwid").value;
-				//var ds_title = document.getElementById("ds_title").value;
-				//var ds_body = document.getElementById("ds_body").value;
-         // validate signup form on keyup and submit
          $("#newd").validate({
 					 errorClass: "my-error-class",
             rules: {
@@ -64,7 +60,7 @@
 
   <?php echo validation_errors(); ?>
   <?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
-    <div class="col-md-5 fluid" id="cview">
+    <div class="col-md-9 fluid" id="cview">
     <h4> Create a new Discussion</h4>
     <br />
     <div class="form-group col-md-5">
