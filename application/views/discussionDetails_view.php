@@ -4,129 +4,130 @@
   <title>Marist Discussion Forum</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-  <script src="//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
-  <script src="./js/jquery.easyPaginate.js"></script>
-  <!--
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+  <!-- jQuery -->
+  <!-- BS JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
--->
-<script>
-/*    function submitPostForm(){
-      var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-      var cwid = $('#cwid').val();
-      var title = $('#postTitle').val();
-      var body = $('#postBody').val();
-      var d_id = $('#di_id').val();
-      console.log(d_id);
+  <script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
 
-      if(cwid.trim() == '' ){
-          alert('Please enter your CWID.');
-          $('#cwid').focus();
-          return false;
-      }else if(title.trim() == '' ){
-          alert('Please enter your post title.');
-          $('#postTitle').focus();
-          return false;
-      }else if(body.trim() == '' ){
-          alert('Please enter your message.');
-          $('#postBody').focus();
-          return false;
-      }else{
-          $.ajax({
-              type:'POST',
-              url:'<?php //echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
-              //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-              data:{'contactFrmSubmit':'1', 'cwid' :cwid, 'postTitle' :title, 'postBody':body, 'd_id':d_id},
-              beforeSend: function () {
-                  $('.submitBtn').attr("disabled","disabled");
-                  $('.modal-body').css('opacity', '.5');
-              },
-              success:function(msg){
-                  if(msg == 'ok'){
-                      $('#cwid').val('');
-                      $('#postTitle').val('');
-                      $('#postBody').val('');
-                      $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
-                  }else{
-                      $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
-                  }
-                  $('.submitBtn').removeAttr("disabled");
-                  $('.modal-body').css('opacity', '');
-                  $('.myModal').modal('hide');
-                  $('.myModal').on('hidden.bs.modal', function () {
-                    location.reload();
-                  })
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-              }
-          });
-      }
-  }*/
+  <script>
+
+  /*    function submitPostForm(){
+        var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+        var cwid = $('#cwid').val();
+        var title = $('#postTitle').val();
+        var body = $('#postBody').val();
+        var d_id = $('#di_id').val();
+        console.log(d_id);
+
+        if(cwid.trim() == '' ){
+            alert('Please enter your CWID.');
+            $('#cwid').focus();
+            return false;
+        }else if(title.trim() == '' ){
+            alert('Please enter your post title.');
+            $('#postTitle').focus();
+            return false;
+        }else if(body.trim() == '' ){
+            alert('Please enter your message.');
+            $('#postBody').focus();
+            return false;
+        }else{
+            $.ajax({
+                type:'POST',
+                url:'<?php //echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
+                //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
+                data:{'contactFrmSubmit':'1', 'cwid' :cwid, 'postTitle' :title, 'postBody':body, 'd_id':d_id},
+                beforeSend: function () {
+                    $('.submitBtn').attr("disabled","disabled");
+                    $('.modal-body').css('opacity', '.5');
+                },
+                success:function(msg){
+                    if(msg == 'ok'){
+                        $('#cwid').val('');
+                        $('#postTitle').val('');
+                        $('#postBody').val('');
+                        $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
+                    }else{
+                        $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
+                    }
+                    $('.submitBtn').removeAttr("disabled");
+                    $('.modal-body').css('opacity', '');
+                    $('.myModal').modal('hide');
+                    $('.myModal').on('hidden.bs.modal', function () {
+                      location.reload();
+                    })
+
+                }
+            });
+        }
+    }*/
 
 
-/*  function submitCommentForm(){
-      var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-      var cwid = $('#ccwid').val();
-      var body = $('#commentBody').val();
-      var p_id = $('#p_id ').val();
+  /*  function submitCommentForm(){
+        var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+        var cwid = $('#ccwid').val();
+        var body = $('#commentBody').val();
+        var p_id = $('#p_id ').val();
 
-      if(cwid.trim() == '' ){
-          alert('Please enter your CWID.');
-          $('#ccwid').focus();
-          return false;
-      }else if(body.trim() == '' ){
-          alert('Please enter your message.');
-          $('#commentBody').focus();
-          return false;
-      }else{
-          $.ajax({
-              type:'POST',
-              url:'<?php //echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
-              //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-              data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body, 'd_id':d_id},
-              beforeSend: function () {
-                  $('.submitBtn').attr("disabled","disabled");
-                  $('.modal-body').css('opacity', '.5');
-              },
-              success:function(msg){
-                  if(msg == 'ok'){
-                      $('#ccwid').val('');
-                      $('#commentBody').val('');
-                      $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
-                  }else{
-                      $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
-                  }
-                  $('.submitBtn').removeAttr("disabled");
-                  $('.modal-body').css('opacity', '');
-                  $('#myComment').modal('hide');
-                  $('#myComment').on('hidden.bs.modal', function () {
-                    location.reload();
-                  })
+        if(cwid.trim() == '' ){
+            alert('Please enter your CWID.');
+            $('#ccwid').focus();
+            return false;
+        }else if(body.trim() == '' ){
+            alert('Please enter your message.');
+            $('#commentBody').focus();
+            return false;
+        }else{
+            $.ajax({
+                type:'POST',
+                url:'<?php //echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
+                //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
+                data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body, 'd_id':d_id},
+                beforeSend: function () {
+                    $('.submitBtn').attr("disabled","disabled");
+                    $('.modal-body').css('opacity', '.5');
+                },
+                success:function(msg){
+                    if(msg == 'ok'){
+                        $('#ccwid').val('');
+                        $('#commentBody').val('');
+                        $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
+                    }else{
+                        $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
+                    }
+                    $('.submitBtn').removeAttr("disabled");
+                    $('.modal-body').css('opacity', '');
+                    $('#myComment').modal('hide');
+                    $('#myComment').on('hidden.bs.modal', function () {
+                      location.reload();
+                    })
 
-              }
-          });
-      }
-  }*/
-</script>
-<style>
+                }
+            });
+        }
+    }*/
+  </script>
+  <style>
 
-  .easyPaginateNav a {
-    padding:5px;float: inherit;color: #000;
-    text-decoration: none;
+    .easyPaginateNav a {
+      padding:5px;float: inherit;color: #000;
+      text-decoration: none;
+    }
+    .easyPaginateNav a.current {
+      font-weight:bold;background-color: #4CAF50;color: #000;border-radius: 8px;text-decoration: none;
+    }
+    .easyPaginateNav a.active {
+      background-color: #4CAF50;color: #000;
+      color: white;text-decoration: none;
   }
-  .easyPaginateNav a.current {
-    font-weight:bold;background-color: #4CAF50;color: #000;border-radius: 8px;text-decoration: none;
-  }
-  .easyPaginateNav a.active {
-    background-color: #4CAF50;color: #000;
-    color: white;text-decoration: none;
-}
 
-.easyPaginate a:hover:not(.active) {background-color: #ddd;}
+  .easyPaginate a:hover:not(.active) {background-color: #ddd;}
 
-</style>
+  </style>
 
 </head>
 <body>
@@ -213,12 +214,12 @@
     </div>
     </div>
     <?php// echo form_close(); ?>
-    <script>
+    <script type="text/javascript">
     $('#easyPaginate').easyPaginate({
-      paginateElement: 'li',
-      elementsPerPage: 3,
-      effect: 'climb'
-});
+	      paginateElement: 'li',
+	      elementsPerPage: 3,
+	      effect: 'climb'
+	});
   </script>
 </body>
 </html>

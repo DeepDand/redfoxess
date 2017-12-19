@@ -13,6 +13,7 @@
 		<!-- jQuery -->
 		<!-- BS JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 		<script>
@@ -52,7 +53,6 @@
         $('#cview').css('display','none');
 				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 			});
-
     });
 		function submitPostForm(){
 				var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -74,7 +74,7 @@
 						$('#postBody').focus();
 						return false;
 				}else{
-					//console.log("finally in else");	
+					//console.log("finally in else");
 						$.ajax({
 								type:'POST',
 								url:'<?php echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
@@ -101,7 +101,9 @@
 										$('#myModal').modal('hide');
 										$(document).on('hidden.bs.modal','#myModal', function () {
 											//alert("in location reload");
-											location.reload();
+											//document.location.reload();
+											window.location.href='<?php echo base_url()?>'+'Discussion/discussionDetails/'+d_id;//document.getElementById('anchorid');
+											console.log();
 										})
 
 								}
@@ -144,7 +146,9 @@
 		<div id="dlist">
 		</div>
     </div>
-		<div id="hidemaincontainer"><button id="hidecontainer" name="hidecontainer">kill main</button>
-
+		<div id="hidemaincontainer"><button id="hidecontainer" name="hidecontainer">kill main</button></div>
+			<script>
+    
+	  </script>
   </body>
 </html>
