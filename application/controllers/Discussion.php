@@ -37,7 +37,7 @@ class Discussion extends CI_Controller
 			 //URL accessable when the authentication works
 	  //$casurl = "http%3A%2F%2Flocalhost%2Frepository%2F%3Fc%3Dauth%26m%3DdbAuth";
 	  //$casurl = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-		$casurl = "http%3A%2F%2Flocalhost%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view";
+		$casurl = "http%3A%2F%2Fdev.library.marist.edu%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view";
 		if (!$authenticated) {
 					 $_SESSION['LAST_SESSION'] = time(); // update last activity time stamp
 					 $_SESSION['CAS'] = true;
@@ -213,7 +213,7 @@ class Discussion extends CI_Controller
 				$this->load->view('fail_view');
 			}
 		} else {
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
+			echo "Please <a href ='http://dev.library.marist.edu/redfoxes/Discussion/index'>login</a> first";echo $ad;
 		}
 	}
 
