@@ -176,7 +176,7 @@
     </li>
 
 
-    <br /><?php  ?>
+    <br /><!--<?php  ?>-->
   <?php endforeach; //echo $links;?>
   </div>
   <div id="pagination"></div>
@@ -224,7 +224,7 @@
       </div>
     </div>
     </div>
-    <?php// echo form_close(); ?>
+    <!--<?php// echo form_close(); ?>-->
     <script type="text/javascript">
     $('#easyPaginate').easyPaginate({
 	      paginateElement: 'li',

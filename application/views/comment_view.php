@@ -56,7 +56,7 @@
 </script>
 </head>
 <body>
-  <?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
+  <!--<?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>-->
   <div class="container fluid">
     <h2>Post</h2>
     <!--View to show the body of discussions, forums and comments on the discussions -->
@@ -121,7 +121,7 @@
       </div>
     </div>
   </div>
-  <?php// echo form_close(); ?>
+  <!--<?php// echo form_close(); ?>-->
 
 </body>
 </html>
