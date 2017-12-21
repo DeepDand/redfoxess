@@ -118,20 +118,20 @@
 
 		function submitPostForm(){
 				var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-				var cwid = $('#cwid').val();
-				var title = $('#postTitle').val();
-				var body = $('#postBody').val();
+				var pcwid = $('#pcwid').val();
+				var ptitle = $('#postTitle').val();
+				var pbody = $('#postBody').val();
 				var d_id = $('#di_id ').val();
 
-				if(cwid.trim() == '' ){
+				if(pcwid.trim() == '' ){
 						alert('Please enter your CWID.');
 						$('#cwid').focus();
 						return false;
-				}else if(title.trim() == '' ){
+				}else if(ptitle.trim() == '' ){
 						alert('Please enter your post title.');
 						$('#postTitle').focus();
 						return false;
-				}else if(body.trim() == '' ){
+				}else if(pbody.trim() == '' ){
 						alert('Please enter your message.');
 						$('#postBody').focus();
 						return false;
@@ -141,7 +141,7 @@
 								type:'POST',
 								url:'<?php echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
 								//data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-								data:{'contactFrmSubmit':'1', 'cwid' :cwid, 'postTitle' :title, 'postBody':body, 'd_id':d_id},
+								data:{'contactFrmSubmit':'1', 'cwid' :pcwid, 'postTitle' :ptitle, 'postBody':pbody, 'd_id':d_id},
 								beforeSend: function () {
 										$('.submitBtn').attr("disabled","disabled");
 										$('.modal-body').css('opacity', '.5');
@@ -159,18 +159,27 @@
 										}
 										$('.submitBtn').removeAttr("disabled");
 										$('.modal-body').css('opacity', '');
-										//$('#myModal').modal('hide');
 										$('#myModal').modal('hide');
 										$(document).on('hidden.bs.modal','#myModal', function () {
 											//alert("in location reload");
-											document.location.reload();
-											window.location.href='<?php echo base_url()?>'+'Discussion/discussionDetails/'+d_id;//document.getElementById('anchorid');
-											console.log();
-										})
+											//$('body').removeClass('modal-open');
+											//$('.modal-backdrop').remove();
 
-								}
-						});
+											$('.modal-backdrop').fadeOut(400);
+											var resultUrl = '<?php echo base_url()?>'+'Discussion/discussionDetails/'+d_id;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+											$('#ddetails').load(resultUrl);
+											$('#ddetails').css('display','block');//showing the list of discussion
+											$('#dlist').css('display','none');//showing the list of discussion
+											document.location.reload();
+											//var v = setTimeout(showCurrDiss,500);
+										})
+								},
+
+						});//showCurrDiss();
 				}
+		}
+		function showCurrDiss(){
+			//need to redirect to same discussion after adding a new post
 		}
 		function submitCommentForm(){
 	      var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -294,6 +303,8 @@
 		    </div>  <!-- Modal end for adding Post -->
 			</div>
 			<div id="dlist">
+			</div>
+			<div id="ddetails">
 			</div>
 			<div id="comments">
 			</div>

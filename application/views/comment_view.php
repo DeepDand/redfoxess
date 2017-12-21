@@ -8,51 +8,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
-/*  function submitCommentForm(){
-      var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-      var cwid = $('#ccwid').val();
-      var body = $('#commentBody').val();
-      var p_id = $('#po_id ').val();
-
-      if(cwid.trim() == '' ){
-          alert('Please enter your CWID.');
-          $('#ccwid').focus();
-          return false;
-      }else if(body.trim() == '' ){
-          alert('Please enter your message.');
-          $('#commentBody').focus();
-          return false;
-      }else{
-          $.ajax({
-              type:'POST',
-              url:'<?php //echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
-              //data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-              data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body},
-              beforeSend: function () {
-                  $('.submitBtn').attr("disabled","disabled");
-                  $('.modal-body').css('opacity', '.5');
-              },
-              success:function(msg){
-                  if(msg == 'ok'){
-                      $('#ccwid').val('');
-                      $('#commentBody').val('');
-                      $('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
-                  }else{
-                      $('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
-                  }
-                  $('.submitBtn').removeAttr("disabled");
-                  $('.modal-body').css('opacity', '');
-                  $('#myComment').modal('hide');
-                  $('#myComment').on('hidden.bs.modal', function () {
-                    location.reload();
-                  })
-
-              }
-          });
-      }
-  }*/
-
-
 </script>
 </head>
 <body>
