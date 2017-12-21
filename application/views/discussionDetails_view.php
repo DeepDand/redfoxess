@@ -222,7 +222,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>  <!-- Modal end for adding Post -->
     </div>
     <!--<?php// echo form_close(); ?>-->
     <script type="text/javascript">

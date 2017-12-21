@@ -59,26 +59,26 @@
   <body>
 
   <?php echo validation_errors(); ?>
-  <?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
-    <div class="col-md-9 fluid" id="cview">
-    <h4> Create a new Discussion</h4>
-    <br />
-    <div class="form-group col-md-5">
-      <label for="cwid"><?php echo $this->lang->line('cwid');?></label>
-      <input type="text" name="cwid" class="form-control" id="cwid" required="required" value="<?php echo set_value('cwid'); ?>">
-    </div>
-    <div class="form-group col-md-10">
-      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
-      <input type="text" name="ds_title" class="form-control" id="ds_title" value="<?php echo set_value('ds_title'); ?>">
-    </div>
-    <div class="form-group  col-md-10">
-      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
-      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
-    </div>
-    <div class="form-group  col-md-11">
-      <button type="submit" class="btn btn-success btn-md"><?php echo $this->lang->line('common_form_elements_go');?></button>
-    </div>
-    <?php echo form_close() ; ?>
+    <div class="col-md-9 fluid" id="new_discussion">
+			<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
+	    <h4> Create a new Discussion</h4>
+	    <br />
+	    <div class="form-group col-md-5">
+	      <label for="cwid"><?php echo $this->lang->line('cwid');?></label>
+	      <input type="text" name="cwid" class="form-control" id="cwid" required="required" value="<?php echo set_value('cwid'); ?>">
+	    </div>
+	    <div class="form-group col-md-10">
+	      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
+	      <input type="text" name="ds_title" class="form-control" id="ds_title" value="<?php echo set_value('ds_title'); ?>">
+	    </div>
+	    <div class="form-group  col-md-10">
+	      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
+	      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
+	    </div>
+	    <div class="form-group  col-md-11">
+	      <button type="submit" class="btn btn-success btn-md"><?php echo $this->lang->line('common_form_elements_go');?></button>
+	    </div>
+	    <?php echo form_close() ; ?>
     </div>
   </body>
 </html>

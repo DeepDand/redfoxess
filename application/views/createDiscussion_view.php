@@ -28,32 +28,97 @@
         window.location.href = "https://login.marist.edu/cas/logout";
 				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 			});
-			var create = document.getElementById("newDisc");
-			var view = document.getElementById("discList");
-			$('#ogd').click(function(){
-				//alert('yay');
-
-				var resultUrl = "<?php echo base_url('Discussion/discussionList')?>";
-				$('#disclist').load(resultUrl);
-				$('#disclist').css('display','block');
-				$('#newDisc').css('display','none');
-				//alert('again yay');
+			$("#navi").click(function(){
+				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
+        window.location.href = '<?php echo base_url() ?>';
+				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 			});
-			$('#newDiscussion').click(function(){
+
+			var resultUrll = "<?php echo base_url('Discussion/discussionList')?>";
+			$('#disclist').load(resultUrll);
+			$('#disclist').css('display','block');
+			$('#newDisc').css('display','none');
+
+			//validation for create discussions
+			$("#newd").validate({
+				errorClass: "my-error-class",
+				 rules: {
+					 cwid:"required",
+					 ds_title:"required",
+					 ds_body:"required",
+
+						cwid: {
+							 required: true,
+							 minlength: 8,
+							 maxlength: 8
+						},
+						ds_title: {
+							 required: true,
+							 minlength: 8,
+							 maxlength: 255
+						},
+						ds_body: {
+							 required: true,
+							 minlength: 20,
+							 maxlength: 500
+						},
+				 },
+				 messages: {
+						cwid: {
+							 required: "CWID required",
+							 minlength: "Your CWID must be 8 characters long",
+							 maxlength: "Your CWID must be 8 characters long"
+						},
+						ds_title: {
+							 required: "Discussion title required",
+							 minlength: "Your Discussion title must be at least 8 characters long",
+							 maxlength: "Your Discussion title must be of maximum 255 characters"
+						},
+						ds_body: {
+							 required: "Discussion body required",
+							 minlength: "Your Discussion body must be at least 20 characters long",
+							 maxlength: "Your Discussion body must be of maximum 500 characters"
+						}
+				 },
+
+				 onfocusout: function (element) {
+					 $(element).valid();
+				 }
+			 });
+
+			 $("#cancel").click(function() {
+
+ 				$("#cwid-error").hide();
+				$("#ds_title-error").hide();
+				$("#ds_body-error").hide();
+   			$(".error").removeClass(".my-error-class");
+				//alert("clicked cancel");
+  		 });
+		 });
+
+
+		 var create = document.getElementById("newDisc");
+		 var view = document.getElementById("discList");
+		//	$('#ogd').click(function(){
 				//alert('yay');
 
-				var resultUrl = "<?php echo base_url('Discussion/newDiscussion')?>";
+
+				//alert('again yay');
+			//});
+			/*$('#newDiscussion').click(function(){
+				//alert('yay');
+
+				var resultUrl = "<?php //echo base_url('Discussion/newDiscussion')?>";
 				$('#newDisc').load(resultUrl);
 				$('#newDisc').css('display','block');
 				$('#disclist').css('display','none');
 				//alert('again yay');
-			});
+			});*/
 			$("#hidecontainer").click(function(){
 				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
         $('#cview').css('display','none');
 				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 			});
-    });
 		function submitPostForm(){
 				var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
 				var cwid = $('#cwid').val();
@@ -174,38 +239,66 @@
 	    }
 			/**/
 	    //$('#anchorid').click(fetchList);
+
 		</script>
   </head>
   <body>
-		<div id="logout" align="right"><button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button></div>
+		<div id="navi" align="right" class="container fluid">
+			<br /><br /><button id="home" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Home</button>
+			<button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+		</div>
 
 		<div class="container fluid" id="cview">
-
 			<div id="main_page" class="form-group">
 
 	      <?php echo "<h3>".$title."</h3>" ?><br />
-	      <button type="button" class="btn btn-default btn-lg" id="newDiscussion" name="newDiscussion">Create Discussion</button>
+	      <button type="button" class="btn btn-default btn-lg" id="newDiscussion" name="newDiscussion" data-toggle="modal" data-target="#newModal">Create Discussion</button>
 				<br /><br /><br />
-				<button type="button" class="btn btn-default btn-lg" id="ogd" name="ogd">View on going Discussions</button>
-				<br /><br />
+				<!--<button type="button" class="btn btn-default btn-lg" id="ogd" name="ogd">View on going Discussions</button>
+				<br /><br />-->
 				<p>This is p tag<br /><?php echo $user; ?></p>
 
-				<div id="disclist" name="disclist" class="col-md-8">
+				<div id="disclist" name="disclist" class="col-md-8"></div>
+				<div id="newDisc" class="form-horizontal"></div>
+				<!-- Modal for adding Post -->
+		    <div class="modal fade" id="newModal" name="newModal" role="dialog" >
+		      <div class="modal-dialog">
 
-				</div>
-
-				<div id="newDisc" class="form-horizontal">
-				</div>
-
-		</div>
-		<div id="dlist">
-		</div>
-		<div id="comments">
-		</div>
-    </div>
-		<div id="hidemaincontainer"><button id="hidecontainer" name="hidecontainer">kill main</button></div>
-			<script>
-
-	  </script>
+		        <!-- Modal content-->
+		        <div class="modal-content">
+		          <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal">&times;</button>
+		            <h4 class="modal-title">Create a new Discussion</h4>
+		          </div>
+		          <div class="modal-body">
+								<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
+						    <div>
+						      <label for="cwid"><?php echo $this->lang->line('cwid');?></label>
+						      <input type="text" name="cwid" class="form-control" id="cwid" required="required" value="<?php echo set_value('cwid'); ?>" />
+						    </div>
+						    <div>
+						      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
+						      <input type="text" name="ds_title" class="form-control" id="ds_title" value="<?php echo set_value('ds_title'); ?>" />
+						    </div>
+						    <div>
+						      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
+						      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
+						    </div>
+						    <?php echo form_close() ; ?>
+		          </div>
+		          <div class="modal-footer">
+		            <button type="submit" class="btn btn-default"><?php echo $this->lang->line('common_form_elements_go');?></button>
+		            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel" name="cancel">Close</button>
+		          </div>
+		        </div>
+		      </div>
+		    </div>  <!-- Modal end for adding Post -->
+			</div>
+			<div id="dlist">
+			</div>
+			<div id="comments">
+			</div>
+	    </div>
+			<div id="hidemaincontainer"><button id="hidecontainer" name="hidecontainer">kill main</button></div>
   </body>
 </html>
