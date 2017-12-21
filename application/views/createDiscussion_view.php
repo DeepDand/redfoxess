@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 	<head>
@@ -87,7 +86,9 @@
 			 });
 
 			 $("#cancel").click(function() {
-
+				$("#cwid").val("");
+ 				$("#ds_title").val("");
+ 				$("#ds_body").val("");
  				$("#cwid-error").hide();
 				$("#ds_title-error").hide();
 				$("#ds_body-error").hide();
@@ -114,11 +115,7 @@
 				$('#disclist').css('display','none');
 				//alert('again yay');
 			});*/
-			$("#hidecontainer").click(function(){
-				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-        $('#cview').css('display','none');
-				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-			});
+
 		function submitPostForm(){
 				var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
 				var cwid = $('#cwid').val();
@@ -220,23 +217,23 @@
 	          });
 	      }
 	  }
-	    function fetchList(myURL){
-				console.log(resultUrl);
-	      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
-	      $('#dlist').load(resultUrl);
-	      $('#dlist').css('display','block');//showing the list of discussion
-	      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
-	      //console.log(resultUrl);
-	    }
-			function fetchComments(myURL){
-				console.log(resultUrl);
-	      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
-	      $('#comments').load(resultUrl);
-	      $('#comments').css('display','block');//showing the list of discussion
-	      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
-	      $('#dlist').css('display','none');//hiding the list of on going discussions
-	      //console.log(resultUrl);
-	    }
+    function fetchList(myURL){
+      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			console.log(resultUrl);
+      $('#dlist').load(resultUrl);
+      $('#dlist').css('display','block');//showing the list of discussion
+      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+      //console.log(resultUrl);
+		}
+		function fetchComments(myURL){
+      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			console.log(resultUrl);
+      $('#comments').load(resultUrl);
+      $('#comments').css('display','block');//showing the list of discussion
+      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+      $('#dlist').css('display','none');//hiding the list of on going discussions
+      //console.log(resultUrl);
+		}
 			/**/
 	    //$('#anchorid').click(fetchList);
 
@@ -270,8 +267,9 @@
 		            <button type="button" class="close" data-dismiss="modal">&times;</button>
 		            <h4 class="modal-title">Create a new Discussion</h4>
 		          </div>
+							<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
+
 		          <div class="modal-body">
-								<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
 						    <div>
 						      <label for="cwid"><?php echo $this->lang->line('cwid');?></label>
 						      <input type="text" name="cwid" class="form-control" id="cwid" required="required" value="<?php echo set_value('cwid'); ?>" />
@@ -284,12 +282,13 @@
 						      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
 						      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
 						    </div>
-						    <?php echo form_close() ; ?>
+
 		          </div>
 		          <div class="modal-footer">
-		            <button type="submit" class="btn btn-default"><?php echo $this->lang->line('common_form_elements_go');?></button>
-		            <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel" name="cancel">Close</button>
+		            <button type="submit" class="btn btn-success"><?php echo $this->lang->line('common_form_elements_go');?></button>
+		            <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel" name="cancel">Close</button>
 		          </div>
+							<?php echo form_close() ; ?>
 		        </div>
 		      </div>
 		    </div>  <!-- Modal end for adding Post -->
@@ -299,6 +298,5 @@
 			<div id="comments">
 			</div>
 	    </div>
-			<div id="hidemaincontainer"><button id="hidecontainer" name="hidecontainer">kill main</button></div>
   </body>
 </html>

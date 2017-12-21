@@ -59,7 +59,7 @@
   <body>
 
   <?php echo validation_errors(); ?>
-    <div class="col-md-9 fluid" id="new_discussion">
+    <div class="col-md-9 fluid" id="cview">
 			<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
 	    <h4> Create a new Discussion</h4>
 	    <br />

@@ -234,7 +234,7 @@ class Discussion extends CI_Controller
 					            'ds_body' =>  $this->input->post('ds_body')
 					           );
 				if ($this->Discussion_model->create($data)) {
-					redirect('Discussion/discussionList'); //need to redirected to the list of discussions __******
+					redirect(base_url()); //need to redirected to the list of discussions __******
 				} else {
 					// error
 					// load view and flash sess error
