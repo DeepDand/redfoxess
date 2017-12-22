@@ -11,6 +11,9 @@
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 		<!-- jQuery -->
 		<!-- BS JavaScript -->
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src="<?php echo base_url();?>/js/jquery.easyPaginate.js"></script>
 
@@ -86,7 +89,8 @@
 			 });
 
 			 $("#cancel").click(function() {
-				$("#cwid").val("");
+				 $("#cat:first-child").text("Select Discussion Category");
+				 $("#cat:first-child").val("default");
  				$("#ds_title").val("");
  				$("#ds_body").val("");
  				$("#cwid-error").hide();
@@ -118,16 +122,17 @@
 
 		function submitPostForm(){
 				var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-				var pcwid = $('#pcwid').val();
+				//var pcwid = $('#pcwid').val();
 				var ptitle = $('#postTitle').val();
 				var pbody = $('#postBody').val();
 				var d_id = $('#di_id ').val();
 
-				if(pcwid.trim() == '' ){
+				/*if(pcwid.trim() == '' ){
 						alert('Please enter your CWID.');
 						$('#cwid').focus();
 						return false;
-				}else if(ptitle.trim() == '' ){
+				}else */
+				if(ptitle.trim() == '' ){
 						alert('Please enter your post title.');
 						$('#postTitle').focus();
 						return false;
@@ -245,7 +250,16 @@
 		}
 			/**/
 	    //$('#anchorid').click(fetchList);
+			$(function(){
 
+	 $(".dropdown-menu li a").click(function(){
+
+		 $("#cat:first-child").text($(this).text());
+		 $("#cat:first-child").val($(this).text());
+
+	});
+
+});
 		</script>
   </head>
   <body>
@@ -262,7 +276,7 @@
 				<br /><br /><br />
 				<!--<button type="button" class="btn btn-default btn-lg" id="ogd" name="ogd">View on going Discussions</button>
 				<br /><br />-->
-				<p>This is p tag<br /><?php echo $user; ?></p>
+				<p>This is p tag<br /><?php echo $user;echo $cas_answer ?></p>
 
 				<div id="disclist" name="disclist" class="col-md-8"></div>
 				<div id="newDisc" class="form-horizontal"></div>
@@ -279,10 +293,18 @@
 							<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
 
 		          <div class="modal-body">
-						    <div>
-						      <label for="cwid"><?php echo $this->lang->line('cwid');?></label>
-						      <input type="text" name="cwid" class="form-control" id="cwid" required="required" value="<?php echo set_value('cwid'); ?>" />
-						    </div>
+								<div class="dropdown">
+								  <button class="btn btn-primary dropdown-toggle" id="cat" type="button" data-toggle="dropdown">Select Discussion Category
+								  <span class="caret"></span></button>
+								  <ul class="dropdown-menu">
+								    <li><a href="#">Academic</a></li>
+								    <li><a href="#">Accommodation</a></li>
+								    <li><a href="#">Registrar</a></li>
+										<li><a href="#">Events</a></li>
+									 <li><a href="#">IT related</a></li>
+									 <li><a href="#">Transportation</a></li>
+								  </ul>
+								</div>
 						    <div>
 						      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
 						      <input type="text" name="ds_title" class="form-control" id="ds_title" value="<?php echo set_value('ds_title'); ?>" />

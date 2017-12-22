@@ -78,7 +78,9 @@ class Discussion extends CI_Controller
 					 $user= str_replace('@marist.edu','',$user);
 					 $_SESSION['user'] = $user;
 					 $_SESSION['access'] = $access;
+					 $_SESSION['cas_answer'] = $cas_answer;
 					 $data['user'] = $_SESSION['user'];
+					 $data['cas_answer'] = $_SESSION['cas_answer'];
 					 $data['title'] = "Marist Disussion Forums";
 					 $ad = $_GET['ticket'];
 		 			$this->session->set_userdata('ad',$access);

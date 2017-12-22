@@ -105,10 +105,10 @@
           </div>
           <div class="modal-body">
             <form role="form">
-                   <div class="form-group">
+                <!--   <div class="form-group">
                        <label for="pcwid">CWID</label>
                        <input type="text" class="form-control" id="pcwid" placeholder="Enter your CWID"/>
-                   </div>
+                   </div>-->
                    <div class="form-group">
                        <label for="postTitle">Post Title</label>
                        <input type="text" class="form-control" id="postTitle" placeholder="Title"/>
