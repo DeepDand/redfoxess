@@ -121,15 +121,15 @@
 				$("#newd").validate({
 					errorClass: "my-error-class",
 					 rules: {
-						 cwid:"required",
+						 //cwid:"required",
 						 ds_title:"required",
 						 ds_body:"required",
 
-							cwid: {
+							/*cwid: {
 								 required: true,
 								 minlength: 8,
 								 maxlength: 8
-							},
+							},*/
 							ds_title: {
 								 required: true,
 								 minlength: 8,
@@ -142,11 +142,11 @@
 							},
 					 },
 					 messages: {
-							cwid: {
+							/*cwid: {
 								 required: "CWID required",
 								 minlength: "Your CWID must be 8 characters long",
 								 maxlength: "Your CWID must be 8 characters long"
-							},
+							},*/
 							ds_title: {
 								 required: "Discussion title required",
 								 minlength: "Your Discussion title must be at least 8 characters long",
@@ -169,7 +169,7 @@
 					 $("#cat:first-child").val("default");
 					$("#ds_title").val("");
 					$("#ds_body").val("");
-					$("#cwid-error").hide();
+					//$("#cwid-error").hide();
 					$("#ds_title-error").hide();
 					$("#ds_body-error").hide();
 					$(".error").removeClass(".my-error-class");
@@ -222,7 +222,7 @@
 									type:'POST',
 									url:'<?php echo base_url() ?>'+'Discussion/addNewPost', //+cwid+'/'+title+'/'+body+'/'+d_id
 									//data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-									data:{'contactFrmSubmit':'1', 'cwid' :pcwid, 'postTitle' :ptitle, 'postBody':pbody, 'd_id':d_id},
+									data:{'contactFrmSubmit':'1', 'postTitle' :ptitle, 'postBody':pbody, 'd_id':d_id},
 									beforeSend: function () {
 											$('.submitBtn').attr("disabled","disabled");
 											$('.modal-body').css('opacity', '.5');
@@ -231,7 +231,7 @@
 									success:function(msg){
 
 											if(msg == 'ok'){
-													$('#cwid').val('');
+													//$('#cwid').val('');
 													$('#postTitle').val('');
 													$('#postBody').val('');
 													$('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
@@ -264,15 +264,16 @@
 			}
 			function submitCommentForm(){
 					var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-					var cwid = $('#ccwid').val();
+					//var cwid = $('#ccwid').val();
 					var body = $('#commentBody').val();
 					var p_id = $('#po_id ').val();
 
-					if(cwid.trim() == '' ){
+					/*if(cwid.trim() == '' ){
 							alert('Please enter your CWID.');
 							$('#ccwid').focus();
 							return false;
-					}else if(body.trim() == '' ){
+					}else */
+					if(body.trim() == '' ){
 							alert('Please enter your message.');
 							$('#commentBody').focus();
 							return false;
@@ -281,14 +282,14 @@
 									type:'POST',
 									url:'<?php echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
 									//data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-									data:{'cwid' :cwid, 'p_id' : p_id, 'commentBody':body},
+									data:{/*'cwid' :cwid,*/ 'p_id' : p_id, 'commentBody':body},
 									beforeSend: function () {
 											$('.submitBtn').attr("disabled","disabled");
 											$('.modal-body').css('opacity', '.5');
 									},
 									success:function(msg){
 											if(msg == 'ok'){
-													$('#ccwid').val('');
+													//$('#ccwid').val('');
 													$('#commentBody').val('');
 													$('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
 											}else{

@@ -144,7 +144,8 @@ class Discussion extends CI_Controller
 		$data['title'] = "Marist Disussion Forums";
 
 		  // Submitted form data
-		  $data['cwid']   = $_POST['cwid'];
+		  //$data['cwid']   = $_POST['cwid'];
+			$data['cwid']   = $_SESSION['user'];
 		  $data['p_title']   = $_POST['postTitle'];
 		  $data['p_body']   = $_POST['postBody'];
 			$data['d_id']   = $_POST['d_id'];
@@ -167,7 +168,8 @@ class Discussion extends CI_Controller
 		public function addNewComment(){
 			$data['title'] = "Marist Disussion Forums";
 	    // Submitted form data
-		    $data['cwid'] = $_POST['cwid'];
+		    //$data['cwid'] = $_POST['cwid'];
+				$data['cwid']   = $_SESSION['user'];
 		    $data['c_body'] = $_POST['commentBody'];
 				$data['p_id'] = $_POST['p_id'];
 				$pid = $_POST['p_id'];

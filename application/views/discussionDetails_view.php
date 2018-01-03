@@ -74,7 +74,7 @@
       <input type="hidden" id="p_id" value = "<?php echo (isset($postresult->p_id))?$postresult->p_id:'';?>" />
       <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$postresult->cwid; ?></p>
       <p><?php echo $postresult->p_body; ?></p>
-      <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>
+      <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">Reply</button></a>
       <input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>"></input><!--this is to pass urls to specific discussions -->
       <!--<a href="<?php //echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>-->
     </li>
