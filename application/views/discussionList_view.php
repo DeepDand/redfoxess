@@ -35,6 +35,7 @@
         <thead>
           <td>Discussion Title</td>
           <td>Created By</td>
+          <td>Category</td>
         </thead>
       </div>
       <?php
@@ -44,6 +45,7 @@
             <td><a id="anchorid" href="javascript:fetchList('<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>')"><?php echo $result->d_title; ?></a></td>
           <!--  <td><a href="<?php //echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"><?php //echo $result->d_title;echo "dont click"; ?></a></td>-->
             <td><?php echo $result->cwid; ?></td>
+            <td><?php echo $result->category; ?></td>
             <td><input type="hidden" id="d_id" name= "d_id" value ="<?php echo (isset($result->d_id))?$result->d_id:'';?>" required="required" /></td>
             <td><input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"></input></td><!--this is to pass urls to specific discussions -->
           </tr>

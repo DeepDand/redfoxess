@@ -27,7 +27,8 @@
 		$(document).ready(function(){
 			$("#logout").click(function(){
 				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-        window.location.href = "https://login.marist.edu/cas/logout";
+				alert('bye!');
+        window.location = "https://login.marist.edu/cas/logout";
 				//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 			});
 			$("#navi").click(function(){
@@ -251,15 +252,13 @@
 			/**/
 	    //$('#anchorid').click(fetchList);
 			$(function(){
+				$(".dropdown-menu option a").click(function(){
+					$("#cat:first-child").text($(this).text());
+					$("#cat:first-child").val($(this).text());
 
-	 $(".dropdown-menu li a").click(function(){
+				});
+			});
 
-		 $("#cat:first-child").text($(this).text());
-		 $("#cat:first-child").val($(this).text());
-
-	});
-
-});
 		</script>
   </head>
   <body>
@@ -276,7 +275,7 @@
 				<br /><br /><br />
 				<!--<button type="button" class="btn btn-default btn-lg" id="ogd" name="ogd">View on going Discussions</button>
 				<br /><br />-->
-				<p>This is p tag<br /><?php echo $user;echo $cas_answer ?></p>
+				<p><?php echo $cwid; ?></p>
 
 				<div id="disclist" name="disclist" class="col-md-8"></div>
 				<div id="newDisc" class="form-horizontal"></div>
@@ -288,22 +287,24 @@
 		        <div class="modal-content">
 		          <div class="modal-header">
 		            <button type="button" class="close" data-dismiss="modal">&times;</button>
-		            <h4 class="modal-title">Create a new Discussion</h4>
+		            <h4 class="modal-title col-md-9">Create a new Discussion</h4>
 		          </div>
 							<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
 
 		          <div class="modal-body">
 								<div class="dropdown">
-								  <button class="btn btn-primary dropdown-toggle" id="cat" type="button" data-toggle="dropdown">Select Discussion Category
-								  <span class="caret"></span></button>
-								  <ul class="dropdown-menu">
-								    <li><a href="#">Academic</a></li>
-								    <li><a href="#">Accommodation</a></li>
-								    <li><a href="#">Registrar</a></li>
-										<li><a href="#">Events</a></li>
-									 <li><a href="#">IT related</a></li>
-									 <li><a href="#">Transportation</a></li>
-								  </ul>
+								  <!--<button class="btn btn-primary dropdown-toggle" id="cat" type="button" data-toggle="dropdown">Select Discussion Category
+								  <span class="caret"></span></button>-->
+									<label for="category">Category</label>
+								  <select class="form-control" id="category" name="category">
+										<option value="General"><a href="#">General</a></option>
+								    <option value="Academic"><a href="#">Academic</a></option>
+										<option value="Accommodation"><a href="#">Accommodation</a></option>
+								    <option value="Registrar"><a href="#">Registrar</a></option>
+										<option value="Events"><a href="#">Events</a></option>
+									 	<option value="IT issues"><a href="#">IT issues</a></option>
+									 	<option value="Transportation"><a href="#">Transportation</a></option>
+								  </select>
 								</div>
 						    <div>
 						      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
