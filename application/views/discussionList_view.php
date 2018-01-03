@@ -4,56 +4,62 @@
   <title>Marist Discussion Forums</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <script type="text/javascript">
-  /*document.getElementById('ogd').onclick = function() {getList()};
-  function getList() {
-    var resultUrl = "<?php //echo base_url('Discussion/discussionList')?>";
-    $('#disclist').load(resultUrl);
-  }*/
-//  var getdid = document.getElementById('d_id').value;
-//  $(function(){
-    function fetchList(myURL){
-      console.log(resultUrl);
-      var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
-      $('#dlist').load(resultUrl);
-      $('#dlist').css('display','block');//showing the list of discussion
-      $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
-      //console.log(resultUrl);
-    }
-    //$('#anchorid').click(fetchList);
-//  });
-  </script>
 </head>
 <body>
 <?php @session_start();//echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>
-<div class="col-md-9 fluid">
+<div>
   <form name="dview" id="dview" method="post" action="<?php echo base_url().'Discussion/discussionDetails/'; ?>">
-  <h2>On-going Discussions</h2>
-      <div class="col-md-9 fluid">
-      <table class="table table-responsive">
-        <thead>
-          <td>Discussion Title</td>
-          <td>Created By</td>
-          <td>Category</td>
-        </thead>
-      </div>
-      <?php
-        foreach ($query->result() as $result) ://$this->input->post($result->d_id, $result->d_title, $result->cwid);?>
-        <div class="col-md-3">
-          <tr>
-            <td><a id="anchorid" href="javascript:fetchList('<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>')"><?php echo $result->d_title; ?></a></td>
-          <!--  <td><a href="<?php //echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"><?php //echo $result->d_title;echo "dont click"; ?></a></td>-->
-            <td><?php echo $result->cwid; ?></td>
-            <td><?php echo $result->category; ?></td>
-            <td><input type="hidden" id="d_id" name= "d_id" value ="<?php echo (isset($result->d_id))?$result->d_id:'';?>" required="required" /></td>
-            <td><input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"></input></td><!--this is to pass urls to specific discussions -->
-          </tr>
+    <h2>On-going Discussions</h2>
+      <div>
+        <table id="tabledata"  class="table table-striped table-bordered responsive" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>Discussion Title</th>
+              <th>Created By</th>
+              <th>Category</th>
+              <th class="hidden-xs hidden-sm hidden-md hidden-lg"></th>
+              <th class="hidden-xs hidden-sm hidden-md hidden-lg"></th>
+            </tr>
+          </thead>
+
         </div>
-<?php endforeach; ?>
-</table>
-</form>
-</div>
+        <tbody>
+          <?php
+            foreach ($query->result() as $result) ://$this->input->post($result->d_id, $result->d_title, $result->cwid);?>
+            <div>
+              <tr>
+                <td><a id="anchorid" href="javascript:fetchList('<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>')"><?php echo $result->d_title; ?></a></td>
+                <td><?php echo $result->cwid; ?></td>
+                <td><?php echo $result->category; ?></td>
+                <td class="hidden-xs hidden-sm hidden-md hidden-lg"><input type="hidden" id="d_id" name= "d_id" value ="<?php echo (isset($result->d_id))?$result->d_id:'';?>" required="required" /></td>
+                <td class="hidden-xs hidden-sm hidden-md hidden-lg"><input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"></input></td><!--this is to pass urls to specific discussions -->
+              </tr>
+            </div>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </form>
+  </div>
 <!--<?php //echo form_close(); ?>-->
+<script type="text/javascript">
+ $('#tabledata').DataTable();
+/*document.getElementById('ogd').onclick = function() {getList()};
+function getList() {
+  var resultUrl = "<?php //echo base_url('Discussion/discussionList')?>";
+  $('#disclist').load(resultUrl);
+}*/
+//  var getdid = document.getElementById('d_id').value;
+//  $(function(){
+  function fetchList(myURL){
+    console.log(resultUrl);
+    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+    $('#dlist').load(resultUrl);
+    $('#dlist').css('display','block');//showing the list of discussion
+    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+    //console.log(resultUrl);
+  }
+  //$('#anchorid').click(fetchList);
+//  });
+</script>
 </body>
 </html>
