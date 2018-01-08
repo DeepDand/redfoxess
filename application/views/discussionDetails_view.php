@@ -80,6 +80,28 @@
 
       <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/seeReplyView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm">View Reply</button></a>
 
+      <a href="javascript:void(0);" data-href='<?php echo base_url().'Discussion/seeReplyView/'.$postresult->p_id; ?>' class="openPopup"><button type="button" class="btn btn-info btn-sm">Show this thread</button></a><!-- trying to implement thread view on modal-->
+      <!-- Modal -->
+          <div class="modal fade" id="myReplies" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Bootstrap Modal with Dynamic Content</h4>
+                  </div>
+                  <div id="threads" name="threads" class="modal-body">
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+
+          </div>
+          </div>
+
       <a id="anchorid" href="javascript:$('#myComment').find('#post_id').val('<?php echo $postresult->p_id;?>');console.log();$('#myComment').modal('show');"><button type="button" class="btn btn-info btn-sm">Reply</button></a>
 
       <input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>"></input><!--this is to pass urls to specific discussions -->
@@ -207,6 +229,12 @@
   function commentclose(){
     $('#myComment').modal('hide');
   }
+  $('.openPopup').on('click',function(){
+        var dataURL = $(this).attr('data-href');
+        $('.modal-body').load(dataURL,function(){
+            $('#myReplies').modal({show:true});
+        });
+    });
   </script>
 </body>
 </html>

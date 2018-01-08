@@ -12,7 +12,7 @@
 </head>
 <body>
   <!--<?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>-->
-  <div class="container fluid">
+  <div>
     <!--View to show the body of discussions, forums and comments on the discussions -->
     <?php
     if($commentquery) {
