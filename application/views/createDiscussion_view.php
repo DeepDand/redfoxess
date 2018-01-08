@@ -265,15 +265,18 @@
 			function submitCommentForm(){
 					var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
 					//var cwid = $('#ccwid').val();
-					var body = $('#commentBody').val();
-					var p_id = $('#po_id ').val();
+					var cbody = $('#commentBody').val();
+					console.log("this is your message\n"+cbody);
+					var p_id = $('#post_id').val();
+					console.log("adding your reply to post:"+p_id);
+					//alert(cbody);
 
 					/*if(cwid.trim() == '' ){
 							alert('Please enter your CWID.');
 							$('#ccwid').focus();
 							return false;
 					}else */
-					if(body.trim() == '' ){
+					if(cbody.trim() == '' ){
 							alert('Please enter your message.');
 							$('#commentBody').focus();
 							return false;
@@ -282,7 +285,7 @@
 									type:'POST',
 									url:'<?php echo base_url() ?>'+'Discussion/addNewComment', //+cwid+'/'+title+'/'+body+'/'+d_id
 									//data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
-									data:{/*'cwid' :cwid,*/ 'p_id' : p_id, 'commentBody':body},
+									data:{/*'cwid' :cwid,*/ 'p_id' : p_id, 'commentBody':cbody},
 									beforeSend: function () {
 											$('.submitBtn').attr("disabled","disabled");
 											$('.modal-body').css('opacity', '.5');
@@ -291,6 +294,7 @@
 											if(msg == 'ok'){
 													//$('#ccwid').val('');
 													$('#commentBody').val('');
+
 													$('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
 											}else{
 													$('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
@@ -300,8 +304,10 @@
 											$('#myComment').modal('hide');
 											$(document).on('hidden.bs.modal','#myComment', function () {
 												//document.location.reload();
-												window.location.href='<?php echo base_url()?>'+'Discussion/commentView/'+p_id;//document.getElementById('anchorid');
-												console.log();
+												//window.location.href='<?php //echo base_url()?>'+'Discussion/commentView/'+p_id;//document.getElementById('anchorid');
+												//console.log();
+												fetchComments('<?php echo base_url()?>'+'Discussion/seeReplyView/'+p_id);
+										    $(this).find('input[name="post_id"]').val("");
 											})
 
 									}
@@ -316,7 +322,7 @@
 				$('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
 				//console.log(resultUrl);
 			}
-			function fetchComments(myURL){
+			/*function fetchComments(myURL){
 				var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
 				console.log(resultUrl);
 				$('#comments').load(resultUrl);
@@ -324,7 +330,7 @@
 				$('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
 				$('#dlist').css('display','none');//hiding the list of on going discussions
 				//console.log(resultUrl);
-			}
+			}*/
 				/**/
 				//$('#anchorid').click(fetchList);
 				$(function(){
@@ -334,7 +340,32 @@
 
 					});
 				});
+				/*function fetchComments(myURL){
+			    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			    console.log(resultUrl);
+			    $('#viewreplies').load(resultUrl);
+			    $('#viewreplies').css('display','block');//showing the list of discussion
+			    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+			    //$('#dlist').css('display','none');//hiding the list of on going discussions
+			    //console.log(resultUrl);
+			  }*/
 
+			  function addComments(myURL){
+			    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			    console.log(resultUrl);
+			    $('#viewreplies').load(resultUrl);
+			    $('#viewreplies').css('display','block');//showing the list of discussion
+			    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+			    //$('#dlist').css('display','none');//hiding the list of on going discussions
+			    //console.log(resultUrl);
+			  }
+
+			  function addNewComment(){
+			    $('#myComment').modal('show');
+			  }
+			  function commentclose(){
+			    $('#myComment').modal('hide');
+			  }
 			</script>
 
 

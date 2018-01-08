@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script>
-</script>
 </head>
 <body>
   <!--<?php //echo form_open(base_url().'Discussion/discussionDetails','role="form"'); ?>-->
@@ -21,7 +19,7 @@
       <div class="list-group list-group-item">
         <h4 class="list-group-item-heading">Title: <?php echo $result->p_title; ?></h4>
         <p class="list-group-item-text"><?php echo "Created by".$result->cwid; ?></p>
-        <input type="hidden" id="po_id" value = "<?php echo (isset($result->p_id))?$result->p_id:'';?>" />
+        <input type="hidden" id="po_id" value = "<?php echo $post_id;//echo (isset($result->p_id))?$result->p_id:'';?>" />
         <p><?php echo $result->p_body; ?></p>
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myComment">Add Comments</button>
       </div><br />
@@ -57,10 +55,10 @@
           </div>
           <div class="modal-body">
             <form role="form">
-                   <div class="form-group">
+                   <!--<div class="form-group">
                        <label for="cwid">CWID</label>
                        <input type="text" class="form-control" id="ccwid" placeholder="Enter your CWID"/>
-                   </div>
+                   </div>-->
                    <div class="form-group">
                        <label for="commentBody">Your Comment</label>
                        <textarea class="form-control" id="commentBody" placeholder="Enter your Comment"></textarea>
@@ -75,6 +73,7 @@
         </div>
       </div>
     </div>
+    <!--END OF MODAL -->
   </div>
   <!--<?php// echo form_close(); ?>-->
 

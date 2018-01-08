@@ -71,10 +71,17 @@
 
       <li class="list-group-item">
       <h4 class="list-group-item-heading">Post title: <?php echo $postresult->p_title; ?></h4>
+
       <input type="hidden" id="p_id" value = "<?php echo (isset($postresult->p_id))?$postresult->p_id:'';?>" />
+
       <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$postresult->cwid; ?></p>
-      <p><?php echo $postresult->p_body; ?></p>
-      <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">Reply</button></a>
+
+      <p><?php echo $postresult->p_body; ?></p><div id="viewreplies" name="viewreplies"></div>
+
+      <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/seeReplyView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm">View Reply</button></a>
+
+      <a id="anchorid" href="javascript:$('#myComment').find('#post_id').val('<?php echo $postresult->p_id;?>');console.log();$('#myComment').modal('show');"><button type="button" class="btn btn-info btn-sm">Reply</button></a>
+
       <input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/commentView/'.$postresult->p_id; ?>"></input><!--this is to pass urls to specific discussions -->
       <!--<a href="<?php //echo base_url().'Discussion/commentView/'.$postresult->p_id ?>"><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myComment">View Comments</button></a>-->
     </li>
@@ -82,7 +89,9 @@
 
     <br /><!--<?php  ?>-->
   <?php endforeach; //echo $links;?>
+
   </div>
+
   <div id="pagination"></div>
   <?php } else {?>
       <div class="list-group list-group-item">
@@ -127,14 +136,77 @@
         </div>
       </div>
     </div>  <!-- Modal end for adding Post -->
+
+    <!-- Modal for adding comment on a post -->
+      <div class="modal fade" id="myComment" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" onclick="commentclose()">&times;</button>
+              <h4 class="modal-title">New Comment</h4>
+            </div>
+            <div class="modal-body">
+              <form role="form">
+                     <!--<div class="form-group">
+                         <label for="cwid">CWID</label>
+                         <input type="text" class="form-control" id="ccwid" placeholder="Enter your CWID"/>
+                     </div>-->
+                     <div class="form-group">
+                         <label for="commentBody">Your Comment</label>
+                         <textarea class="form-control" name-"commentBody" id="commentBody" placeholder="Enter your Comment"></textarea>
+                           <input type="hidden" name="post_id" id="post_id"/>
+                     </div>
+                 </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary submitBtn" onclick="submitCommentForm()">SUBMIT</button>
+              <button type="button" class="btn btn-default" onclick="commentclose()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--END OF MODAL -->
+
+
     </div>
     <!--<?php// echo form_close(); ?>-->
     <script type="text/javascript">
+
     $('#easyPaginate').easyPaginate({
 	      paginateElement: 'li',
 	      elementsPerPage: 3,
 	      effect: 'climb'
 	});
+  function fetchComments(myURL){
+    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+    console.log(resultUrl);
+    $('#viewreplies').load(resultUrl);
+    $('#viewreplies').css('display','block');//showing the list of discussion
+    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+    //$('#dlist').css('display','none');//hiding the list of on going discussions
+    //console.log(resultUrl);
+  }
+
+  function addComments(myURL){
+    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+    console.log(resultUrl);
+    $('#viewreplies').load(resultUrl);
+    $('#viewreplies').css('display','block');//showing the list of discussion
+    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+    //$('#dlist').css('display','none');//hiding the list of on going discussions
+    //console.log(resultUrl);
+  }
+
+  function addNewComment(someid){
+    var postid = someid;
+    $('#myComment').modal('show');
+  }
+
+  function commentclose(){
+    $('#myComment').modal('hide');
+  }
   </script>
 </body>
 </html>
