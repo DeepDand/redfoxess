@@ -130,6 +130,24 @@ class Discussion extends CI_Controller
 
 	}
 
+	public function seeReplyView(){
+			$post_id = $this->uri->segment(3);
+			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
+			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
+			$post_data['post_id'] = $post_id;
+ 			$this->load->view('seeReply_view',$post_data);
+
+	}
+
+	public function addReplyView(){
+			$post_id = $this->uri->segment(3);
+			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
+			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
+			$post_data['post_id'] = $post_id;
+ 			$this->load->view('addReply_view',$post_data);
+
+	}
+
 	public function discussionList(){
 		$page_data['query'] = $this->Discussion_model->discussion_list();
 		$this->load->view('discussionList_view',$page_data);
@@ -187,8 +205,6 @@ class Discussion extends CI_Controller
 		//first step - load discussion body, then load related posts and then comments on the posts.
 		//$page_data['query'] = $this->Discussion_model->discussion_list();
 		//$data = array('d_id' => $this->input->post('d_id'));
-		$ad = $this->session->userdata('ad');
-		if($ad!='') {
 			$did = $this->uri->segment(3);
 			//var_dump($did);
 			$pid = array();
@@ -218,10 +234,6 @@ class Discussion extends CI_Controller
 			else {
 				$this->load->view('fail_view');
 			}
-		} else {
-			//echo "Please <a href ='http://dev.library.marist.edu/redfoxes/Discussion/index'>login</a> first";echo $ad;
-			echo "Please <a href ='http://localhost/redfoxes/Discussion/index'>login</a> first";echo $ad;
-		}
 	}
 
 
