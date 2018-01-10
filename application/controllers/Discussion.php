@@ -119,45 +119,34 @@ class Discussion extends CI_Controller
 				$data['title'] = "Marist Disussion Forums";
 				$this->load->view('createDiscussion_view',$data);
 	}
-
-
-
 	public function commentView(){
 			$post_id = $this->uri->segment(3);
 			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
 			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
 			$this->load->view('comment_view',$post_data);
-
 	}
-
 	public function seeReplyView(){
 			$post_id = $this->uri->segment(3);
 			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
 			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
 			$post_data['post_id'] = $post_id;
  			$this->load->view('seeReply_view',$post_data);
-
 	}
-
 	public function addReplyView(){
 			$post_id = $this->uri->segment(3);
 			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
 			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
 			$post_data['post_id'] = $post_id;
  			$this->load->view('addReply_view',$post_data);
-
 	}
-
 	public function discussionList(){
 		$page_data['query'] = $this->Discussion_model->discussion_list();
 		$this->load->view('discussionList_view',$page_data);
 	}
-
 	public function newDiscussion(){
 		$data['title'] = "Marist Disussion Forums";
 		$this->load->view('newDiscussion_view.php',$data);
 	}
-
 	public function addNewPost(){
 		$data['title'] = "Marist Disussion Forums";
 

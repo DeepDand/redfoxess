@@ -366,6 +366,9 @@
 			  function commentclose(){
 			    $('#myComment').modal('hide');
 			  }
+				
+
+
 			</script>
 
 

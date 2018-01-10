@@ -78,7 +78,7 @@
 
       <p><?php echo $postresult->p_body; ?></p><div id="viewreplies" name="viewreplies"></div>
 
-      <a id="anchorid" href="javascript:fetchComments('<?php echo base_url().'Discussion/seeReplyView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm">View Reply</button></a>
+      <!--<a id="anchorid" href="javascript:fetchComments('<?php //echo base_url().'Discussion/seeReplyView/'.$postresult->p_id; ?>')"><button type="button" class="btn btn-info btn-sm">View Reply</button></a>-->
 
       <a href="javascript:void(0);" data-href='<?php echo base_url().'Discussion/seeReplyView/'.$postresult->p_id; ?>' class="openPopup"><button type="button" class="btn btn-info btn-sm">Show this thread</button></a><!-- trying to implement thread view on modal-->
       <!-- Modal -->
@@ -134,7 +134,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">New Post</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" name="postbody" id="postbody">
             <form role="form">
                 <!--   <div class="form-group">
                        <label for="pcwid">CWID</label>
@@ -231,7 +231,7 @@
   }
   $('.openPopup').on('click',function(){
         var dataURL = $(this).attr('data-href');
-        $('.modal-body').load(dataURL,function(){
+        $('#threads').load(dataURL,function(){
             $('#myReplies').modal({show:true});
         });
     });
