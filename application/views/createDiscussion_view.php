@@ -368,6 +368,12 @@
 
 			</script>
 
-
+			<!--Javascript crashes because the document is not completely ready. The below code helps -->
+			<?php
+			print str_pad('',4096)."\n";
+			ob_flush();
+			flush();
+			set_time_limit(45);
+			?>
   </body>
 </html>
