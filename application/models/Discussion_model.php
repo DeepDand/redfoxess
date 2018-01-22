@@ -123,7 +123,7 @@ class Discussion_model extends CI_Model
 
 	public function discussion_list() {
 			// List of discussions from the database to add sort method in the improvement
-			$query = "SELECT 'discussion'.'d_id','discussion'.'d_title', 'discussion'.'cwid','discussion'.'category' FROM 'discussion' ORDER BY 'discussion'.'age' DESC";
+			$query = "SELECT 'discussion'.'d_id','discussion'.'d_title', 'discussion'.'cwid','discussion'.'category','discussion'.'age' FROM 'discussion' ORDER BY 'discussion'.'d_id' DESC";
 			/*if ($sort != null) {
 				if ($filter == `age`) {
 					$filter = `ds_created_at`;

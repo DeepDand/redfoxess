@@ -99,13 +99,6 @@
 				$('#disclist').load(resultUrl);
 			}*/
 			$(document).ready(function(){
-
-				$("#logout").click(function(){
-					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-					alert('bye!');
-					window.location = "https://login.marist.edu/cas/logout";
-					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-				});
 				$("#navi").click(function(){
 					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 					window.location.href = '<?php echo base_url() ?>';
@@ -366,8 +359,12 @@
 			  function commentclose(){
 			    $('#myComment').modal('hide');
 			  }
-				
-
+				$("#logout").click(function(){
+					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
+					alert('bye!');
+					window.location.replace = "https://login.marist.edu/cas/logout";
+					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
+				});
 
 			</script>
 

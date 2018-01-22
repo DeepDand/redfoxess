@@ -17,6 +17,7 @@
               <th>Discussion Title</th>
               <th>Created By</th>
               <th>Category</th>
+              <th>Created on</th>
               <th class="hidden-xs hidden-sm hidden-md hidden-lg"></th>
               <th class="hidden-xs hidden-sm hidden-md hidden-lg"></th>
             </tr>
@@ -31,6 +32,7 @@
                 <td><a id="anchorid" href="javascript:fetchList('<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>')"><?php echo $result->d_title; ?></a></td>
                 <td><?php echo $result->cwid; ?></td>
                 <td><?php echo $result->category; ?></td>
+                <td><?php echo $result->age; ?></td>
                 <td class="hidden-xs hidden-sm hidden-md hidden-lg"><input type="hidden" id="d_id" name= "d_id" value ="<?php echo (isset($result->d_id))?$result->d_id:'';?>" required="required" /></td>
                 <td class="hidden-xs hidden-sm hidden-md hidden-lg"><input type="hidden" id="getURL" name="getURL" value="<?php echo base_url().'Discussion/discussionDetails/'.$result->d_id; ?>"></input></td><!--this is to pass urls to specific discussions -->
               </tr>
@@ -42,7 +44,9 @@
   </div>
 <!--<?php //echo form_close(); ?>-->
 <script type="text/javascript">
- $('#tabledata').DataTable();
+ $('#tabledata').DataTable({
+   "order": [[3, "desc"]]
+ });
 /*document.getElementById('ogd').onclick = function() {getList()};
 function getList() {
   var resultUrl = "<?php //echo base_url('Discussion/discussionList')?>";
