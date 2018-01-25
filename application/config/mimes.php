@@ -98,7 +98,7 @@ return array(
 	'rtx'	=>	'text/richtext',
 	'rtf'	=>	'text/rtf',
 	'xml'	=>	array('application/xml', 'text/xml', 'text/plain'),
-	'xsl'	=>	array('application/xml', 'text/xsl', 'text/xml'),
+	'xsl'	=>	'text/xml',
 	'mpeg'	=>	'video/mpeg',
 	'mpg'	=>	'video/mpeg',
 	'mpe'	=>	'video/mpeg',
