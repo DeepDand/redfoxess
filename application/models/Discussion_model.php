@@ -12,7 +12,7 @@ class Discussion_model extends CI_Model
     // Look and see if the email address already exists in the users
     // table, if it does return the primary key, if not create them
     // a user account and return the primary key.
-    $discussion_data = array('cwid' => $data['cwid'],'d_title' => $data['ds_title'],'d_body' =>$data['ds_body'],'category'=>$data['category']); //can be added a field for active discussions 'ds_is_active' => '1'
+    $discussion_data = array('cwid' => '0','d_title' => $data['ds_title'],'d_body' =>$data['ds_body'],'category'=>$data['category'],'d_num'=>$data['ds_num']); //can be added a field for active discussions 'ds_is_active' => '1'
 		$inserting =  $this->db->insert("discussion",$discussion_data);
     if ($inserting) {
 			return 1;
@@ -60,6 +60,27 @@ class Discussion_model extends CI_Model
 			return false;
 		}
 	}
+
+	public function find_discussion($dnum){
+		//function to fetch discussions details from the database
+		$condition = 'd_num='."'".$dnum."'".' OR '.'d_id='."'".$dnum."'";
+		$this->db->select('*');
+		$this->db->from('discussion');
+		$this->db->where($condition);
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		$ret = $query->row();
+		$val = 	$ret->d_id;
+		//var_dump($val);
+
+		if($query->num_rows() == 1) {
+			return $val;
+		} else {
+			return false;
+		}
+	}
+
+
 	public function count_post($did){
 		//function to fetch discussions details from the database
 		$condition = 'd_id='."'".$did."'";
@@ -123,7 +144,7 @@ class Discussion_model extends CI_Model
 
 	public function discussion_list() {
 			// List of discussions from the database to add sort method in the improvement
-			$query = "SELECT 'discussion'.'d_id','discussion'.'d_title', 'discussion'.'cwid','discussion'.'category','discussion'.'age' FROM 'discussion' ORDER BY 'discussion'.'d_id' DESC";
+			//$query = "SELECT 'discussion'.'d_id','discussion'.'d_title', 'discussion'.'cwid','discussion'.'category','discussion'.'age' FROM 'discussion' ORDER BY 'discussion'.'d_id' DESC";
 			/*if ($sort != null) {
 				if ($filter == `age`) {
 					$filter = `ds_created_at`;
@@ -142,7 +163,8 @@ class Discussion_model extends CI_Model
 				$dir = `ASC`;
 			}
 			$query .= "ORDER BY `ds_created_at` " . $dir;*/
-			$result = $this->db->query($query);
+			$result = $this->db->get('discussion');
+			//$result = $this->db->query($query);
 			if ($result) {
 				return $result;
 			} else {

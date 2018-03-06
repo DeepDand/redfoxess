@@ -59,7 +59,7 @@ function getList() {
     var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
     $('#dlist').load(resultUrl);
     $('#dlist').css('display','block');//showing the list of discussion
-    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+    $('#disclist').css('display','none'); //hiding the button create new discussion and view on-going discussions
     //console.log(resultUrl);
   }
   //$('#anchorid').click(fetchList);

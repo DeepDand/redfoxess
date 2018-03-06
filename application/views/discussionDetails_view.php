@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
   <script>
-    function fetchComments(myURL){
+    /*function fetchComments(myURL){
       var resultUrl = myURL; //document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
       console.log(resultUrl);
       $('#comments').load(resultUrl);
@@ -22,7 +22,7 @@
       $('#dlist').css('display','none');//hiding the list of on going discussions
       $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
       console.log(resultUrl);
-    }
+    }*/
   </script>
   <style>
 
@@ -64,10 +64,11 @@
     <?php } ?>
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Post</button>
     <br /><br />
+
     <div class="list-group" style="margin-left:20px" id="easyPaginate" name="easyPaginate">
-    <?php
-    if($postquery) {
-    foreach ($postquery->result() as $postresult) : $this->input->post($postresult->p_title,$postresult->p_body);?>
+      <?php
+      if($postquery) {
+      foreach ($postquery->result() as $postresult) : $this->input->post($postresult->p_title,$postresult->p_body);?>
 
       <li class="list-group-item">
       <h4 class="list-group-item-heading">Post title: <?php echo $postresult->p_title; ?></h4>
@@ -89,7 +90,7 @@
               <div class="modal-content">
                   <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Bootstrap Modal with Dynamic Content</h4>
+                      <h4 class="modal-title">Thread</h4>
                   </div>
                   <div id="threads" name="threads" class="modal-body">
 
@@ -110,8 +111,8 @@
 
 
     <br /><!--<?php  ?>-->
-  <?php endforeach; //echo $links;?>
 
+<?php endforeach; //echo $links;?>
   </div>
 
   <div id="pagination"></div>
@@ -135,7 +136,6 @@
             <h4 class="modal-title">New Post</h4>
           </div>
           <div class="modal-body" name="postbody" id="postbody">
-            <form role="form">
                 <!--   <div class="form-group">
                        <label for="pcwid">CWID</label>
                        <input type="text" class="form-control" id="pcwid" placeholder="Enter your CWID"/>
@@ -149,7 +149,6 @@
                        <textarea class="form-control" id="postBody" placeholder="Enter your message"></textarea>
                        <input type="hidden" id="di_id" value = "<?php echo (isset($result->d_id))?$result->d_id:'';?>" />
                    </div>
-               </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary submitBtn" onclick="submitPostForm()" >SUBMIT</button>
@@ -206,17 +205,21 @@
     console.log(resultUrl);
     $('#viewreplies').load(resultUrl);
     $('#viewreplies').css('display','block');//showing the list of discussion
-    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+    $('#dlist').css('display','none');
+    $('#disclist').css('display','none'); //hiding the button create new discussion and view on-going discussions
     //$('#dlist').css('display','none');//hiding the list of on going discussions
     //console.log(resultUrl);
   }
+
+
 
   function addComments(myURL){
     var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
     console.log(resultUrl);
     $('#viewreplies').load(resultUrl);
     $('#viewreplies').css('display','block');//showing the list of discussion
-    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+    $('#dlist').css('display','none');
+    $('#disclist').css('display','none'); //hiding the button create new discussion and view on-going discussions
     //$('#dlist').css('display','none');//hiding the list of on going discussions
     //console.log(resultUrl);
   }

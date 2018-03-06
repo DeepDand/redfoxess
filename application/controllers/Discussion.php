@@ -26,7 +26,8 @@ class Discussion extends CI_Controller
 	public function index()
 	{
 		$data['title'] = "Marist Disussion Forums";
-		$date = date("m/d/Y");
+		$this->load->view('createDiscussion_view',$data);
+		/*$date = date("m/d/Y");
 	  if (isset($_SESSION['LAST_SESSION']) && (time() - $_SESSION['LAST_SESSION'] > 900)) {
 					 if(!isset($_SESSION['CAS'])) {
 							 $_SESSION['CAS'] = false; // set the CAS session to false
@@ -95,7 +96,7 @@ class Discussion extends CI_Controller
 				 }
 			 } else  {
 				 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=https://login.marist.edu/cas?service='.$casurl.'">';
-			 }
+			 }*/
 			/* if($_GET['ticket']!='') {
 				 if(empty($_SESSION['login'])){
 					 $_SESSION['login'] = 'yes';
@@ -152,11 +153,11 @@ class Discussion extends CI_Controller
 
 		  // Submitted form data
 		  //$data['cwid']   = $_POST['cwid'];
-			$data['cwid']   = $_SESSION['user'];
-		  $data['p_title']   = $_POST['postTitle'];
-		  $data['p_body']   = $_POST['postBody'];
-			$data['d_id']   = $_POST['d_id'];
-			$did = $_POST['d_id'];
+			//$data['cwid']   = $_SESSION['user'];
+		  $data['p_title']   = $this->input->post('postTitle');
+		  $data['p_body']   = $this->input->post('postBody');
+			$data['d_id']   = $this->input->post('d_id');
+			$did = $this->input->post('d_id');
 		/*    $data['cwid']   = $this->uri->segment(3);
 		  $data['postTitle']   = $this->uri->segment(4);
 		  $data['postBody']   = $this->uri->segment(5);
@@ -197,57 +198,63 @@ class Discussion extends CI_Controller
 			$did = $this->uri->segment(3);
 			//var_dump($did);
 			$pid = array();
-			//$pid = $_POST['p_id'];
 			//fetch discussions from Discussion IDs
 			if($did != '') {
 				$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
-				$config = array();
-	      $config["base_url"] = base_url() .'Discussion/discussionDetails/';
-	      $config['total_rows'] = $this->Discussion_model->count_post($did);
-	      $config['per_page'] = 2;
-	      $config['uri_segment'] = 3;
-	      //$this->pagination->initialize($config);
-	      //$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 				$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);//,$config['per_page'],$page);
 				//$discussion_data['links'] = $this->pagination->create_links();
 				//$pid['p_ids'] = $this->Discussion_model->fetch_postID($did);
 				//$discussion_data['commentquery'] = $this->Discussion_model->fetch_commentDiscussionID($did);
 				$this->load->view('discussionDetails_view',$discussion_data);
-			/*	if($page_data != ''){
-					$this->load->view('discussionDetails_view',$page_data);
-					}
-				else {
-					$this->load->view('success_view');
-				}*/
 			}
 			else {
 				$this->load->view('fail_view');
 			}
 	}
-
-
 	public function create() {
+    //$this->form_validation->set_rules('cwid', $this->lang->line('cwid'), 'required|min_length[8]|max_length[8]');
+    $this->form_validation->set_rules('ds_title', $this->lang->line('discussion_ds_title'), 'required|min_length[1]|max_length[50]');
+    $this->form_validation->set_rules('ds_body', $this->lang->line('discussion_ds_body'), 'required|min_length[1]|max_length[500]');
+		if ($this->form_validation->run() == FALSE) {
+			$data['title'] = "Marist Disussion Forums";
+			$this->load->view('newDiscussion_view',$data);//add alert and bring user to same page to fill the form again.
+		} else {
+			$data = array(
+				'ds_title' => $this->input->post('ds_title'),
+				'ds_body' =>  $this->input->post('ds_body'),
+				'category' => $this->input->post('category'),
+				'ds_num' => $this->input->post('ds_num')
+			);
+      $dtitle = $this->input->post('ds_title');
+      $dbody = $this->input->post('ds_body');
 
-	    //$this->form_validation->set_rules('cwid', $this->lang->line('cwid'), 'required|min_length[8]|max_length[8]');
-	    $this->form_validation->set_rules('ds_title', $this->lang->line('discussion_ds_title'), 'required|min_length[1]|max_length[50]');
-	    $this->form_validation->set_rules('ds_body', $this->lang->line('discussion_ds_body'), 'required|min_length[1]|max_length[500]');
-			if ($this->form_validation->run() == FALSE) {
-				$data['title'] = "Marist Disussion Forums";
-				$this->load->view('newDiscussion_view',$data);//add alert and bring user to same page to fill the form again.
+			$flag = $this->Discussion_model->create($data);
+
+			if ($flag) {
+				return 1;
+				/*$did = $this->Discussion_model->find_discussion($dtitle,$dbody);
+				$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
+				$this->load->view('discussionDetails_view',$discussion_data);*/
+				//redirect(base_url()); //need to redirected to the list of discussions __******
 			} else {
-				$data = array('cwid' => $_SESSION['user'],
-					            'ds_title' => $this->input->post('ds_title'),
-					            'ds_body' =>  $this->input->post('ds_body'),
-											'category' => $this->input->post('category')
-					           );
-				if ($this->Discussion_model->create($data)) {
-					redirect(base_url()); //need to redirected to the list of discussions __******
-				} else {
-					// error
-					// load view and flash sess error
-					$this->load->view('errors/error_exception');
-				}
+				// error
+				// load view and flash sess error
+				$this->load->view('errors/error_exception');
 			}
 		}
+	}
+	public function search_discussion(){
+		$data['title'] = "Marist Disussion Forums";
+		$ds_num = $this->uri->segment(3);
+		//$data['cwid'] = $_SESSION['user'];
+		$did = $this->Discussion_model->find_discussion($ds_num);
+		if($did != '') {
+			$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
+			$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);
+			$this->load->view('discussionDetails_view',$discussion_data);
+		} else {
+			$this->load->view('fail_view');
+		}
+	}
 }
 ?>

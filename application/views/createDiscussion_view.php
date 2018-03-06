@@ -15,6 +15,26 @@
 		<script type="text/javascript" src="datatables/datatables.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="datatables/datatables.min.css"/>
+		<style>
+		.foot {
+			text-align: center;
+			color: #333;
+			font-size: 13px;
+			width: 100%;
+		}
+
+		.foot a:link {
+			color: #333;
+		}
+		.foot a:visited {
+			color: #333;
+		}
+
+		.foot a:hover {
+			color: #B31B1B;
+		}
+
+		</style>
 
 
 
@@ -33,8 +53,10 @@
 				<br /><br /><br />
 				<!--<button type="button" class="btn btn-default btn-lg" id="ogd" name="ogd">View on going Discussions</button>
 				<br /><br />-->
-				<p><?php echo $cwid; ?></p>
+				<p><//?php echo $cwid; ?></p>
 
+				<div id="ddetails"></div>
+				<div id="ddetails1"></div>
 				<div id="disclist" name="disclist" class="col-md-8"></div>
 				<div id="newDisc" class="form-horizontal"></div>
 				<!-- Modal for adding Post -->
@@ -42,17 +64,16 @@
 		      <div class="modal-dialog">
 
 		        <!-- Modal content-->
-		        <div class="modal-content">
+		        <div name="newd" id="newd" class="modal-content">
+
 		          <div class="modal-header">
 		            <button type="button" class="close" data-dismiss="modal">&times;</button>
 		            <h4 class="modal-title col-md-9">Create a new Discussion</h4>
 		          </div>
-							<?php $attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>
+							<!--<?php //$attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>-->
 
 		          <div class="modal-body">
 								<div class="dropdown">
-								  <!--<button class="btn btn-primary dropdown-toggle" id="cat" type="button" data-toggle="dropdown">Select Discussion Category
-								  <span class="caret"></span></button>-->
 									<label for="category">Category</label>
 								  <select class="form-control" id="category" name="category">
 										<option value="General"><a href="#">General</a></option>
@@ -72,32 +93,32 @@
 						      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
 						      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
 						    </div>
-
-		          </div>
+								<!--<input type="text" name="ds_num" class="form-control" id="ds_num" value="<?php //echo mt_rand(); ?>" />-->
+         </div>
 		          <div class="modal-footer">
-		            <button type="submit" class="btn btn-success"><?php echo $this->lang->line('common_form_elements_go');?></button>
+		            <button type="submit" class="btn btn-success" onclick="submitDiscussionForm()"><?php echo $this->lang->line('common_form_elements_go');?></button>
 		            <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel" name="cancel">Close</button>
 		          </div>
-							<?php echo form_close() ; ?>
+							<?php //echo form_close() ; ?>
 		        </div>
 		      </div>
 		    </div>  <!-- Modal end for adding Post -->
 			</div>
-			<div id="dlist" class="col-md-9 fluid">
-			</div>
-			<div id="ddetails">
-			</div>
-			<div id="comments">
-			</div>
+			<div id="dlist" class="col-md-9 fluid"></div>
+			<div id="contactResponse"></div>
+			<div id="comments"></div>
 	    </div>
 
+			<div class="bottom_container">
+	        <p class = "foot">
+	            James A. Cannavino Library, 3399 North Road, Poughkeepsie, NY 12601; 845.575.3199
+	            <br />
+	            &#169; Copyright 2007-2016 Marist College. All Rights Reserved.
+			<a href="http://www.marist.edu/disclaimers.html" target="_blank" >Disclaimers</a> | <a href="http://www.marist.edu/privacy.html" target="_blank" >Privacy Policy</a>
+	        </p>
+	    </div>
 			<script type="text/javascript" class="init">
 
-			/*document.getElementById('ogd').onclick = function() {getList()};
-			function getList() {
-				var resultUrl = "<?php //echo base_url('Discussion/discussionList')?>";
-				$('#disclist').load(resultUrl);
-			}*/
 			$(document).ready(function(){
 				$("#navi").click(function(){
 					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
@@ -105,13 +126,16 @@
 					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 				});
 
+
 				var resultUrll = "<?php echo base_url('Discussion/discussionList')?>";
 				$('#disclist').load(resultUrll);
 				$('#disclist').css('display','block');
-				$('#newDisc').css('display','none');
+				//$('#newDisc').css('display','block');
+                $('#ddetails').css('display','block');
+
 
 				//validation for create discussions
-				$("#newd").validate({
+				$("#newModal").validate({
 					errorClass: "my-error-class",
 					 rules: {
 						 //cwid:"required",
@@ -151,7 +175,6 @@
 								 maxlength: "Your Discussion body must be of maximum 500 characters"
 							}
 					 },
-
 					 onfocusout: function (element) {
 						 $(element).valid();
 					 }
@@ -169,25 +192,8 @@
 					//alert("clicked cancel");
 				 });
 			 });
-
-
 			 var create = document.getElementById("newDisc");
 			 var view = document.getElementById("discList");
-			//	$('#ogd').click(function(){
-					//alert('yay');
-
-
-					//alert('again yay');
-				//});
-				/*$('#newDiscussion').click(function(){
-					//alert('yay');
-
-					var resultUrl = "<?php //echo base_url('Discussion/newDiscussion')?>";
-					$('#newDisc').load(resultUrl);
-					$('#newDisc').css('display','block');
-					$('#disclist').css('display','none');
-					//alert('again yay');
-				});*/
 
 			function submitPostForm(){
 					var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
@@ -231,22 +237,29 @@
 											}else{
 													$('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
 											}
+
+											var resultUrl = '<?php echo base_url()?>'+'Discussion/search_discussion/'+d_id;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+									    console.log(resultUrl);
+											$('#ddetails').empty();
+											$('#dlist').css('display','none');
+											$('#disclist').css('display','none');
+									    $('#ddetails').load(resultUrl);
+									    $('#ddetails').css('display','block');
+//need to fix this part!
+											//fetchPost('<?php //echo base_url()?>'+'Discussion/search_discussion/'+d_id);
 											$('.submitBtn').removeAttr("disabled");
 											$('.modal-body').css('opacity', '');
 											$('#myModal').modal('hide');
-											$(document).on('hidden.bs.modal','#myModal', function () {
-												//alert("in location reload");
-												//$('body').removeClass('modal-open');
-												//$('.modal-backdrop').remove();
+											$('.modal-backdrop').remove();
 
-												$('.modal-backdrop').fadeOut(400);
-												var resultUrl = '<?php echo base_url()?>'+'Discussion/discussionDetails/'+d_id;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
-												$('#ddetails').load(resultUrl);
-												$('#ddetails').css('display','block');//showing the list of discussion
-												$('#dlist').css('display','none');//showing the list of discussion
-												document.location.reload();
-												//var v = setTimeout(showCurrDiss,500);
-											})
+
+											$(document).on('hidden.bs.modal','#myModal', function () {
+												//alert('closed modal');
+												$('.modal-backdrop').remove();
+												//document.location.reload();
+												//window.location.assign('<?php //echo base_url()?>'+'Discussion/search_discussion/'+d_id);
+												});
+
 									},
 
 							});//showCurrDiss();
@@ -287,7 +300,6 @@
 											if(msg == 'ok'){
 													//$('#ccwid').val('');
 													$('#commentBody').val('');
-
 													$('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
 											}else{
 													$('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
@@ -307,25 +319,71 @@
 							});
 					}
 			}
-			function fetchList(myURL){
-				var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			//this method submits the newly created discussion and returns to the discussion details page.
+			function submitDiscussionForm(){
+					var reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+					//var cwid = $('#ccwid').val();
+					var category = $('#category').val();
+					console.log("this is your category\n"+category);
+					var ds_title = $('#ds_title').val();
+					console.log("discussion title:"+ds_title);
+					var ds_body = $('#ds_body').val();
+					console.log("discussion body:"+ds_body);
+					var ds_num = Math.random() * 1000000;
+					console.log("discussion random number:"+ds_num);
+
+					if(category.trim() == '' ){
+							alert('Please enter your CWID.');
+							$('#category').focus();
+							return false;
+					}else if(ds_title.trim() == '' ){
+							alert('Please enter your message.');
+							$('#ds_title').focus();
+							return false;
+					}else if(ds_body.trim() == '' ){
+							alert('Please enter your message.');
+							$('#ds_body').focus();
+							return false;
+					}else{
+						//alert("in else");
+							$.ajax({
+									type:'POST',
+									url:'<?php echo base_url(); ?>'+'Discussion/create', //+cwid+'/'+title+'/'+body+'/'+d_id
+									//data:'contactFrmSubmit=1&cwid='+cwid+'&postTitle='+title+'&postBody='+body+'&d_id='+d_id,//,
+									data:{/*'cwid' :cwid,*/ 'category' : category, 'ds_title':ds_title, 'ds_body':ds_body, 'ds_num':ds_num},
+									beforeSend: function () {
+											$('.submitBtn').attr("disabled","disabled");
+											$('.modal-body').css('opacity', '.5');
+									},
+									success:function(msg){
+											if(msg == 'ok'){
+													//$('#ccwid').val('');
+													$('#category').val('');
+													$('#ds_title').val('');
+													$('#ds_body').val('');
+													$('.statusMsg').html('<span style="color:green;">Thanks for contacting us, we\'ll get back to you soon.</p>');
+											}else{
+													$('.statusMsg').html('<span style="color:red;">Some problem occurred, please try again.</span>');
+											}
+											fetchDiscussion('<?php echo base_url()?>'+'Discussion/search_discussion/'+ds_num);
+											$('.submitBtn').removeAttr("disabled");
+											$('.modal-body').css('opacity', '');
+											$('#newModal').modal('hide');
+											$('.modal-backdrop').remove();
+											$(document).on('hidden.bs.modal','#newModal', function () {
+								});
+							}
+						});
+					}
+				}
+			/*function fetchList(myURL){
+				var resultUrl = myURL;//document.getElementById('getURL').value; //"<//?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
 				console.log(resultUrl);
 				$('#dlist').load(resultUrl);
 				$('#dlist').css('display','block');//showing the list of discussion
 				$('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
 				//console.log(resultUrl);
-			}
-			/*function fetchComments(myURL){
-				var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
-				console.log(resultUrl);
-				$('#comments').load(resultUrl);
-				$('#comments').css('display','block');//showing the list of discussion
-				$('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
-				$('#dlist').css('display','none');//hiding the list of on going discussions
-				//console.log(resultUrl);
 			}*/
-				/**/
-				//$('#anchorid').click(fetchList);
 				$(function(){
 					$(".dropdown-menu option a").click(function(){
 						$("#cat:first-child").text($(this).text());
@@ -333,25 +391,40 @@
 
 					});
 				});
-				/*function fetchComments(myURL){
-			    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
-			    console.log(resultUrl);
-			    $('#viewreplies').load(resultUrl);
-			    $('#viewreplies').css('display','block');//showing the list of discussion
-			    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
-			    //$('#dlist').css('display','none');//hiding the list of on going discussions
-			    //console.log(resultUrl);
-			  }*/
-
 			  function addComments(myURL){
 			    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
 			    console.log(resultUrl);
 			    $('#viewreplies').load(resultUrl);
 			    $('#viewreplies').css('display','block');//showing the list of discussion
-			    $('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+			    $('#dlist').css('display','none');
+					$('#disclist').css('display','none'); //hiding the button create new discussion and view on-going discussions
 			    //$('#dlist').css('display','none');//hiding the list of on going discussions
 			    //console.log(resultUrl);
 			  }
+				function fetchDiscussion(myURL){
+			    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			    console.log(resultUrl);
+					$('#ddetails').empty();
+					$('#dlist').css('display','none');
+					$('#disclist').css('display','none');
+			    $('#ddetails').load(resultUrl);
+			    $('#ddetails').css('display','block');//showing the list of discussion
+			    //$('#main_page').css('display','none'); //hiding the button create new discussion and view on-going discussions
+			    //$('#dlist').css('display','none');//hiding the list of on going discussions
+			    //console.log(resultUrl);
+			  }
+
+				function fetchPost(myURL){
+			    var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
+			    console.log(resultUrl);
+					$('#ddetails').empty();
+					//$('#dlist').css('display','none');
+					//$('#disclist').css('display','none');
+			    $('#ddetails').load(resultUrl);
+			    $('#ddetails').css('display','block');//showing the list of discussion
+			  }
+
+
 
 			  function addNewComment(){
 			    $('#myComment').modal('show');
@@ -362,10 +435,44 @@
 				$("#logout").click(function(){
 					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 					alert('bye!');
-					window.location.replace = "https://login.marist.edu/cas/logout";
+					window.location = "https://login.marist.edu/cas/logout";
 					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
 				});
 
+				//showing the newly discussion created
+     $("#contactForm").submit(function(event)
+		 {
+			 alert("new ajax");
+         /* stop form from submitting normally */
+         event.preventDefault();
+
+         /* get some values from elements on the page: */
+         var $form = $( this ),
+             $submit = $form.find( 'button[type="submit"]' ),
+						 cat_value = $form.find( 'select[name="category"]' ).val(),
+             dstitle_value = $form.find( 'input[name="ds_title"]' ).val(),
+             dsbody_value = $form.find( 'textarea[name="ds_body"]' ).val(),
+             url = $form.attr('action');
+
+         /* Send the data using post */
+         var posting = $.post( url, {
+                           category: cat_value,
+                           ds_title: dstitle_value,
+                           ds_body: dsbody_value
+                       });
+
+         posting.done(function( data )
+         {
+             /* Put the results in a div */
+             $( "#contactResponse" ).html(data);
+
+             /* Change the button text. */
+             $submit.text('Sent, Thank you');
+
+             /* Disable the button. */
+             $submit.attr("disabled", true);
+         });
+			 });
 			</script>
 
 			<!--Javascript crashes because the document is not completely ready. The below code helps -->
