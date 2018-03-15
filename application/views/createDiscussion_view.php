@@ -42,7 +42,7 @@
   <body>
 		<div id="navi" align="right" class="container fluid">
 			<br /><br /><button id="home" class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Home</button>
-			<button id="logout" class="btn btn-primary"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+			<a href="https://login.marist.edu/cas/logout"><button id="logout" type="reset" class="btn btn-logout"><span class="glyphicon glyphicon-log-out"></span> Logout</button></a>
 		</div>
 
 		<div class="container fluid" id="cview">
@@ -442,12 +442,10 @@
 			  function commentclose(){
 			    $('#myComment').modal('hide');
 			  }
-				$("#logout").click(function(){
-					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
+				/*$("#logout").click(function(){
 					alert('bye!');
-					window.location = "https://login.marist.edu/cas/logout";
-					//window.location.replace = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-				});
+					window.location.href = "https://login.marist.edu/cas/logout";
+				});*/
 
 				//showing the newly discussion created
      $("#contactForm").submit(function(event)
