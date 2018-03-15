@@ -53,7 +53,7 @@
     if($query->result()) {
       foreach ($query->result() as $result) : $this->input->post($result->d_title,$result->cwid,$result->d_id,$result->d_body); //$d_id=$result->d_id;?>
         <h4 class="list-group-item-heading">Title: <?php echo $result->d_title; ?></h4>
-        <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$result->cwid; ?></p>
+        <p class="list-group-item-text" style="color:gray"><?php echo "Created by ".$result->cwid; ?></p>
         <p><?php echo $result->d_body; ?></p><br />
 
     <?php endforeach; } else {?>
@@ -75,7 +75,7 @@
 
       <input type="hidden" id="p_id" value = "<?php echo (isset($postresult->p_id))?$postresult->p_id:'';?>" />
 
-      <p class="list-group-item-text" style="color:gray"><?php echo "Created by".$postresult->cwid; ?></p>
+      <p class="list-group-item-text" style="color:gray"><?php echo "Created by ".$postresult->cwid; ?></p>
 
       <p><?php echo $postresult->p_body; ?></p><div id="viewreplies" name="viewreplies"></div>
 
