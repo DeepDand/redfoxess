@@ -12,7 +12,7 @@ class Discussion_model extends CI_Model
     // Look and see if the email address already exists in the users
     // table, if it does return the primary key, if not create them
     // a user account and return the primary key.
-    $discussion_data = array('cwid' => '0','d_title' => $data['ds_title'],'d_body' =>$data['ds_body'],'category'=>$data['category'],'d_num'=>$data['ds_num']); //can be added a field for active discussions 'ds_is_active' => '1'
+    $discussion_data = array('cwid' => $data['cwid'],'d_title' => $data['ds_title'],'d_body' =>$data['ds_body'],'category'=>$data['category'],'d_num'=>$data['ds_num']); //can be added a field for active discussions 'ds_is_active' => '1'
 		$inserting =  $this->db->insert("discussion",$discussion_data);
     if ($inserting) {
 			return 1;

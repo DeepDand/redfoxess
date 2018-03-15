@@ -204,8 +204,8 @@
     var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
     console.log(resultUrl);
     $('#viewreplies').load(resultUrl);
-    $('#viewreplies').css('display','block');//showing the list of discussion
-    $('#dlist').css('display','none');
+    $('#viewreplies').css('display','none');//showing the list of discussion
+    $('#dlist').css('display','block');
     $('#disclist').css('display','none'); //hiding the button create new discussion and view on-going discussions
     //$('#dlist').css('display','none');//hiding the list of on going discussions
     //console.log(resultUrl);
@@ -237,6 +237,52 @@
         $('#threads').load(dataURL,function(){
             $('#myReplies').modal({show:true});
         });
+    });
+
+    //validate post MODAL
+    $("#postbody").validate({
+     errorClass: "my-error-class",
+      rules: {
+        //cwid:"required",
+        postTitle:"required",
+        postBody:"required",
+
+         /*cwid: {
+            required: true,
+            minlength: 8,
+            maxlength: 8
+         },*/
+         postTitle: {
+            required: true,
+            minlength: 8,
+            maxlength: 255
+         },
+         postBody: {
+            required: true,
+            minlength: 20,
+            maxlength: 500
+         },
+      },
+      messages: {
+         /*cwid: {
+            required: "CWID required",
+            minlength: "Your CWID must be 8 characters long",
+            maxlength: "Your CWID must be 8 characters long"
+         },*/
+         postTitle: {
+            required: "Post title required",
+            minlength: "Your post title must be at least 8 characters long",
+            maxlength: "Your post title must be of maximum 255 characters"
+         },
+         postBody: {
+            required: "Post body required",
+            minlength: "Your post body must be at least 20 characters long",
+            maxlength: "Your post body must be of maximum 500 characters"
+         }
+      },
+      onfocusout: function (element) {
+        $(element).valid();
+      }
     });
   </script>
 </body>

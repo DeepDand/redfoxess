@@ -73,38 +73,47 @@
 							<!--<?php //$attributes = array('name' => 'newd','id'=>'newd');echo form_open(base_url().'Discussion/create',$attributes) ; ?>-->
 
 		          <div class="modal-body">
-								<div class="dropdown">
-									<label for="category">Category</label>
-								  <select class="form-control" id="category" name="category">
-										<option value="General"><a href="#">General</a></option>
-								    <option value="Academic"><a href="#">Academic</a></option>
-										<option value="Accommodation"><a href="#">Accommodation</a></option>
-								    <option value="Registrar"><a href="#">Registrar</a></option>
-										<option value="Events"><a href="#">Events</a></option>
-									 	<option value="IT issues"><a href="#">IT issues</a></option>
-									 	<option value="Transportation"><a href="#">Transportation</a></option>
-								  </select>
-								</div>
-						    <div>
-						      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
-						      <input type="text" name="ds_title" class="form-control" id="ds_title" value="<?php echo set_value('ds_title'); ?>" />
-						    </div>
-						    <div>
-						      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
-						      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
-						    </div>
+								<form role="form" id="newModalDisc">
+									<div class="form-group">
+										<div class="dropdown">
+											<label for="category">Category</label>
+										  <select class="form-control" id="category" name="category">
+												<option value="General"><a href="#">General</a></option>
+										    <option value="Academic"><a href="#">Academic</a></option>
+												<option value="Accommodation"><a href="#">Accommodation</a></option>
+										    <option value="Registrar"><a href="#">Registrar</a></option>
+												<option value="Events"><a href="#">Events</a></option>
+											 	<option value="IT issues"><a href="#">IT issues</a></option>
+											 	<option value="Transportation"><a href="#">Transportation</a></option>
+										  </select>
+										</div>
+									</div>
+									<div class="form-group">
+								    <div>
+								      <label for="ds_title"><?php echo $this->lang->line('discussion_ds_title');?></label>
+								      <input type="text" name="ds_title" class="form-control" id="ds_title" value="<?php echo set_value('ds_title'); ?>" />
+								    </div>
+									</div>
+									<div class="form-group">
+								    <div>
+								      <label for="ds_body"><?php echo $this->lang->line('discussion_ds_body');?></label>
+								      <textarea class="form-control" rows="3" name="ds_body" id="ds_body" value="<?php echo set_value('ds_body'); ?>" ></textarea>
+								    </div>
+									</div>
+									<div class="modal-footer">
+				            <button type="submit" class="btn btn-success" onclick="submitDiscussionForm()"><?php echo $this->lang->line('common_form_elements_go');?></button>
+				            <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel" name="cancel">Close</button>
+				          </div>
+								</form>
 								<!--<input type="text" name="ds_num" class="form-control" id="ds_num" value="<?php //echo mt_rand(); ?>" />-->
-         </div>
-		          <div class="modal-footer">
-		            <button type="submit" class="btn btn-success" onclick="submitDiscussionForm()"><?php echo $this->lang->line('common_form_elements_go');?></button>
-		            <button type="button" class="btn btn-warning" data-dismiss="modal" id="cancel" name="cancel">Close</button>
-		          </div>
+							</div>
 							<?php //echo form_close() ; ?>
 		        </div>
 		      </div>
 		    </div>  <!-- Modal end for adding Post -->
 			</div>
 			<div id="dlist" class="col-md-9 fluid"></div>
+
 			<div id="contactResponse"></div>
 			<div id="comments"></div>
 	    </div>
@@ -135,7 +144,7 @@
 
 
 				//validation for create discussions
-				$("#newModal").validate({
+				$("#newModalDisc").validate({
 					errorClass: "my-error-class",
 					 rules: {
 						 //cwid:"required",
@@ -179,6 +188,7 @@
 						 $(element).valid();
 					 }
 				 });
+
 
 				 $("#cancel").click(function() {
 					 $("#cat:first-child").text("Select Discussion Category");

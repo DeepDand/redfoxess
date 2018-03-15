@@ -26,8 +26,8 @@ class Discussion extends CI_Controller
 	public function index()
 	{
 		$data['title'] = "Marist Disussion Forums";
-		$this->load->view('createDiscussion_view',$data);
-		/*$date = date("m/d/Y");
+		//$this->load->view('createDiscussion_view',$data);
+		$date = date("m/d/Y");
 	  if (isset($_SESSION['LAST_SESSION']) && (time() - $_SESSION['LAST_SESSION'] > 900)) {
 					 if(!isset($_SESSION['CAS'])) {
 							 $_SESSION['CAS'] = false; // set the CAS session to false
@@ -96,7 +96,7 @@ class Discussion extends CI_Controller
 				 }
 			 } else  {
 				 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=https://login.marist.edu/cas?service='.$casurl.'">';
-			 }*/
+			 }
 			/* if($_GET['ticket']!='') {
 				 if(empty($_SESSION['login'])){
 					 $_SESSION['login'] = 'yes';
@@ -153,7 +153,7 @@ class Discussion extends CI_Controller
 
 		  // Submitted form data
 		  //$data['cwid']   = $_POST['cwid'];
-			//$data['cwid']   = $_SESSION['user'];
+			$data['cwid']   = $_SESSION['user'];
 		  $data['p_title']   = $this->input->post('postTitle');
 		  $data['p_body']   = $this->input->post('postBody');
 			$data['d_id']   = $this->input->post('d_id');
@@ -220,6 +220,7 @@ class Discussion extends CI_Controller
 			$this->load->view('newDiscussion_view',$data);//add alert and bring user to same page to fill the form again.
 		} else {
 			$data = array(
+				'cwid' => $_SESSION['user'],
 				'ds_title' => $this->input->post('ds_title'),
 				'ds_body' =>  $this->input->post('ds_body'),
 				'category' => $this->input->post('category'),
