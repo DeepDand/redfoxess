@@ -38,8 +38,8 @@ class Discussion extends CI_Controller
 			 //URL accessable when the authentication works
 	  //$casurl = "http%3A%2F%2Flocalhost%2Frepository%2F%3Fc%3Dauth%26m%3DdbAuth";
 	  //$casurl = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-		//$casurl = "http%3A%2F%2Fdev.library.marist.edu%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view"; //-uncomment for dev
-		$casurl = "http%3A%2F%2Flocalhost%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view";
+		$casurl = "http%3A%2F%2Fdev.library.marist.edu%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view"; //-uncomment for dev
+		//$casurl = "http%3A%2F%2Flocalhost%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view";
 		if (!$authenticated) {
 					 $_SESSION['LAST_SESSION'] = time(); // update last activity time stamp
 					 $_SESSION['CAS'] = true;
@@ -158,12 +158,7 @@ class Discussion extends CI_Controller
 		  $data['p_body']   = $this->input->post('postBody');
 			$data['d_id']   = $this->input->post('d_id');
 			$did = $this->input->post('d_id');
-		/*    $data['cwid']   = $this->uri->segment(3);
-		  $data['postTitle']   = $this->uri->segment(4);
-		  $data['postBody']   = $this->uri->segment(5);
-			$data['d_id']   = $this->uri->segment(6);*/
-
-
+			if($data['p_title'] != NULL){
 			if($this->Discussion_model->createPost($data)){
 				$post_data['postquery'] = $this->Discussion_model->fetch_post($did);
 				$post_data['query'] = $this->Discussion_model->fetch_discussion($did);
@@ -171,6 +166,10 @@ class Discussion extends CI_Controller
 				} else {
 					$this->load->view('fail_view');
 				}
+			}
+			else {
+				$this->load->view('fail_view');
+			}
 		}
 
 		public function addNewComment(){

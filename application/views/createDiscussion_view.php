@@ -136,7 +136,7 @@
 				});
 
 
-				var resultUrll = "<?php echo base_url('Discussion/discussionList')?>";
+				var resultUrll = "<?php echo base_url()?>"+'Discussion/discussionList';
 				$('#disclist').load(resultUrll);
 				$('#disclist').css('display','block');
 				//$('#newDisc').css('display','block');
@@ -484,13 +484,5 @@
          });
 			 });
 			</script>
-
-			<!--Javascript crashes because the document is not completely ready. The below code helps -->
-			<?php
-			print str_pad('',4096)."\n";
-			ob_flush();
-			flush();
-			set_time_limit(45);
-			?>
   </body>
 </html>
