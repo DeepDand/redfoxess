@@ -7,7 +7,6 @@ class Discussion extends CI_Controller
 
 	public function __construct()
 	{
-
 		parent::__construct();
 		if(!isset($_SESSION))
     {
@@ -17,12 +16,6 @@ class Discussion extends CI_Controller
 		$this->lang->load('en_admin_lang');
 		$this->load->model('Discussion_model');
 	}
-
-	/*
-     * Retrieve passcodes,resids,emails from db
-     * Load data into crr_view
-     *
-     */
 	public function index()
 	{
 		$data['title'] = "Marist Disussion Forums";
@@ -38,8 +31,8 @@ class Discussion extends CI_Controller
 			 //URL accessable when the authentication works
 	  //$casurl = "http%3A%2F%2Flocalhost%2Frepository%2F%3Fc%3Dauth%26m%3DdbAuth";
 	  //$casurl = "http://localhost/redfoxes/Discussion/createDiscussion_view";
-		$casurl = "http%3A%2F%2Fdev.library.marist.edu%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view"; //-uncomment for dev
-		//$casurl = "http%3A%2F%2Flocalhost%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view";
+		//$casurl = "http%3A%2F%2Fdev.library.marist.edu%2Fredfoxes%2F%3Fc%3DDiscussion%26m%3DcreateDiscussion_view"; //-uncomment for dev
+	$casurl = "http%3A%2F%2Flocalhost%2Fredv1%2F%3Fc%3DDiscussion%26m%3Dmain_view";
 		if (!$authenticated) {
 					 $_SESSION['LAST_SESSION'] = time(); // update last activity time stamp
 					 $_SESSION['CAS'] = true;
@@ -114,101 +107,15 @@ class Discussion extends CI_Controller
 		$this->load->view('fail_view');
 	}
 
-	public function createDiscussion_view(){
+	public function main_view(){
 
 				$data['user'] = $_SESSION['user'];
 				$data['title'] = "Marist Disussion Forums";
-				$this->load->view('createDiscussion_view',$data);
-	}
-	public function commentView(){
-			$post_id = $this->uri->segment(3);
-			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
-			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
-			$this->load->view('comment_view',$post_data);
-	}
-	public function seeReplyView(){
-			$post_id = $this->uri->segment(3);
-			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
-			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
-			$post_data['post_id'] = $post_id;
- 			$this->load->view('seeReply_view',$post_data);
-	}
-	public function addReplyView(){
-			$post_id = $this->uri->segment(3);
-			$post_data['query'] = $this->Discussion_model->fetch_postid($post_id);
-			$post_data['commentquery'] = $this->Discussion_model->fetch_comment($post_id);
-			$post_data['post_id'] = $post_id;
- 			$this->load->view('addReply_view',$post_data);
+				$this->load->view('main_view',$data);
 	}
 	public function discussionList(){
 		$page_data['query'] = $this->Discussion_model->discussion_list();
 		$this->load->view('discussionList_view',$page_data);
-	}
-	public function newDiscussion(){
-		$data['title'] = "Marist Disussion Forums";
-		$this->load->view('newDiscussion_view.php',$data);
-	}
-	public function addNewPost(){
-		$data['title'] = "Marist Disussion Forums";
-
-		  // Submitted form data
-		  //$data['cwid']   = $_POST['cwid'];
-			$data['cwid']   = $_SESSION['user'];
-		  $data['p_title']   = $this->input->post('postTitle');
-		  $data['p_body']   = $this->input->post('postBody');
-			$data['d_id']   = $this->input->post('d_id');
-			$did = $this->input->post('d_id');
-			if($data['p_title'] != NULL){
-			if($this->Discussion_model->createPost($data)){
-				$post_data['postquery'] = $this->Discussion_model->fetch_post($did);
-				$post_data['query'] = $this->Discussion_model->fetch_discussion($did);
-				$this->load->view('discussionDetails_view',$post_data);
-				} else {
-					$this->load->view('fail_view');
-				}
-			}
-			else {
-				$this->load->view('fail_view');
-			}
-		}
-
-		public function addNewComment(){
-			$data['title'] = "Marist Disussion Forums";
-	    // Submitted form data
-		    //$data['cwid'] = $_POST['cwid'];
-				$data['cwid']   = $_SESSION['user'];
-		    $data['c_body'] = $_POST['commentBody'];
-				$data['p_id'] = $_POST['p_id'];
-				$pid = $_POST['p_id'];
-				if($this->Discussion_model->createComment($data)){
-					$comment_data['query'] = $this->Discussion_model->fetch_post($pid);
-					$comment_data['commentquery'] = $this->Discussion_model->fetch_comment($pid);
-					$this->load->view('comment_view',$comment_data);
-					} else {
-						$this->load->view('fail_view');
-				}
-		}
-
-	public function discussionDetails(){
-		//details include the discussion body, posts on the discussion and the comments on these posts
-		//first step - load discussion body, then load related posts and then comments on the posts.
-		//$page_data['query'] = $this->Discussion_model->discussion_list();
-		//$data = array('d_id' => $this->input->post('d_id'));
-			$did = $this->uri->segment(3);
-			//var_dump($did);
-			$pid = array();
-			//fetch discussions from Discussion IDs
-			if($did != '') {
-				$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
-				$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);//,$config['per_page'],$page);
-				//$discussion_data['links'] = $this->pagination->create_links();
-				//$pid['p_ids'] = $this->Discussion_model->fetch_postID($did);
-				//$discussion_data['commentquery'] = $this->Discussion_model->fetch_commentDiscussionID($did);
-				$this->load->view('discussionDetails_view',$discussion_data);
-			}
-			else {
-				$this->load->view('fail_view');
-			}
 	}
 	public function create() {
     //$this->form_validation->set_rules('cwid', $this->lang->line('cwid'), 'required|min_length[8]|max_length[8]');
@@ -243,18 +150,56 @@ class Discussion extends CI_Controller
 			}
 		}
 	}
-	public function search_discussion(){
-		$data['title'] = "Marist Disussion Forums";
-		$ds_num = $this->uri->segment(3);
-		//$data['cwid'] = $_SESSION['user'];
-		$did = $this->Discussion_model->find_discussion($ds_num);
-		if($did != '') {
-			$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
-			$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);
-			$this->load->view('discussionDetails_view',$discussion_data);
-		} else {
-			$this->load->view('fail_view');
-		}
+	public function discussionDetails(){
+		//details include the discussion body, posts on the discussion and the comments on these posts
+			$did = $this->uri->segment(3);
+			//var_dump($did);
+			$pid = array();
+			//fetch discussions from Discussion IDs
+			if($did != '') {
+				$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
+				$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);//,$config['per_page'],$page);
+				$this->load->view('discussionDetails_view',$discussion_data);
+			}
+			else {
+				$this->load->view('fail_view');
+			}
 	}
+	public function addNewPost(){
+		$data['title'] = "Marist Disussion Forums";
+
+		  // Submitted form data
+		  //$data['cwid']   = $_POST['cwid'];
+			$data['cwid']   = $_SESSION['user'];
+		  $data['p_title']   = $this->input->post('postTitle');
+		  $data['p_body']   = $this->input->post('postBody');
+			$data['d_id']   = $this->input->post('d_id');
+			$did = $this->input->post('d_id');
+			if($data['p_title'] != NULL){
+			if($this->Discussion_model->createPost($data)){
+				$post_data['postquery'] = $this->Discussion_model->fetch_post($did);
+				$post_data['query'] = $this->Discussion_model->fetch_discussion($did);
+				$this->load->view('discussionDetails_view',$post_data);
+				} else {
+					$this->load->view('fail_view');
+				}
+			}
+			else {
+				$this->load->view('fail_view');
+			}
+		}
+		public function search_discussion(){
+			$data['title'] = "Marist Disussion Forums";
+			$ds_num = $this->uri->segment(3);
+			//$data['cwid'] = $_SESSION['user'];
+			$did = $this->Discussion_model->find_discussion($ds_num);
+			if($did != '') {
+				$discussion_data['query'] = $this->Discussion_model->fetch_discussion($did);
+				$discussion_data['postquery'] = $this->Discussion_model->fetch_post($did);
+				$this->load->view('discussionDetails_view',$discussion_data);
+			} else {
+				$this->load->view('fail_view');
+			}
+		}
 }
 ?>

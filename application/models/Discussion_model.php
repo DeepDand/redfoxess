@@ -8,7 +8,16 @@ class Discussion_model extends CI_Model
 		parent::__construct();
 		// $this->load->database();
 	}
-  public function create($data) {
+	public function discussion_list() {
+			$result = $this->db->get('discussion');
+			//$result = $this->db->query($query);
+			if ($result) {
+				return $result;
+			} else {
+				return false;
+			}
+		}
+	public function create($data) {
     // Look and see if the email address already exists in the users
     // table, if it does return the primary key, if not create them
     // a user account and return the primary key.
@@ -141,35 +150,5 @@ class Discussion_model extends CI_Model
 			return false;
 			}
 	}
-
-	public function discussion_list() {
-			// List of discussions from the database to add sort method in the improvement
-			//$query = "SELECT 'discussion'.'d_id','discussion'.'d_title', 'discussion'.'cwid','discussion'.'category','discussion'.'age' FROM 'discussion' ORDER BY 'discussion'.'d_id' DESC";
-			/*if ($sort != null) {
-				if ($filter == `age`) {
-					$filter = `ds_created_at`;
-					switch ($direction) {
-						case `ASC`:
-						$dir = `ASC`;
-						break;
-						case `DESC`:
-						$dir = `DESC`;
-						break;
-						default:
-						$dir = `ASC`;
-					}
-				}
-			} else {
-				$dir = `ASC`;
-			}
-			$query .= "ORDER BY `ds_created_at` " . $dir;*/
-			$result = $this->db->get('discussion');
-			//$result = $this->db->query($query);
-			if ($result) {
-				return $result;
-			} else {
-				return false;
-			}
-		}
 }
 ?>

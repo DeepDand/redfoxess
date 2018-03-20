@@ -47,13 +47,6 @@
  $('#tabledata').DataTable({
    "order": [[3, "desc"]]
  });
-/*document.getElementById('ogd').onclick = function() {getList()};
-function getList() {
-  var resultUrl = "<?php //echo base_url('Discussion/discussionList')?>";
-  $('#disclist').load(resultUrl);
-}*/
-//  var getdid = document.getElementById('d_id').value;
-//  $(function(){
   function fetchList(myURL){
     console.log(resultUrl);
     var resultUrl = myURL;//document.getElementById('getURL').value; //"<?php //echo base_url().'Discussion/discussionDetails/'; ?>"+getdid;
@@ -62,8 +55,6 @@ function getList() {
     $('#disclist').css('display','none'); //hiding the button create new discussion and view on-going discussions
     //console.log(resultUrl);
   }
-  //$('#anchorid').click(fetchList);
-//  });
 </script>
 </body>
 </html>
